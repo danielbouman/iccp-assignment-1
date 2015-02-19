@@ -10,3 +10,7 @@ N = 4*np.power(M,3) #Number of particles. The factor 4 is for the fact that we h
 
 ##Initialization of particles
 #Homogeneous distribution
+
+from initpos_function import initpos
+
+initpos( L,M,N );

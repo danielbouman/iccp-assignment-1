@@ -1,11 +1,8 @@
 def initpos(L, N, M):
 	# Given length of a box of D dimensions, distribute N particles homogeneous across
-
-	pos = np.zeros((N, 3),dtype=float) #Initialize position array
+	pos = 2 #np.zeros((N, 3),dtype=float) #Initialize position array
 	a = L/M #Lattice constant
-
 	j = 0 #counter that runs over all particles
-
 	for ii in xrange(0, M-1): # loop through unit cells in the x-direction
 		for iii in xrange(0, M-1): # loop through unit cells in the y-direction
 			for iiii in xrange(0, M-1): # loop through unit cells in the z-direction
@@ -28,3 +25,5 @@ def initpos(L, N, M):
 			#end for loop
 		#end for loop
 	#end for loop
+	
+return pos;

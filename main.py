@@ -14,4 +14,9 @@ N = 4*np.power(M,3) #Number of particles, 4 per unit cell
 from initpos_function import initpos
 
 pos = initpos( L,N,M )
-print pos
+
+fig = pylab.figure()
+ax = Axes3D(fig)
+
+ax.scatter(pos[:,0], pos[:,1], pos[:,2])
+plt.show()

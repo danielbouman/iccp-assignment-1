@@ -14,7 +14,7 @@ N = 4*np.power(M,3)                     # Number of particles, 4 per unit cell
 from initpos_function import initpos
 pos = initpos( L,N,M )
 
-## Init
+## Init velocity
 
 ## Plot particles
 fig = pylab.figure()                    # Define figure

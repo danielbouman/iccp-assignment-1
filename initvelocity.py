@@ -1,15 +1,11 @@
 def initvelocity(L,D,N):
 
-	# Create a variable-sized 2d list
-	rows = N
-	cols = D
-	velocity=[]
-	for row in xrange(rows): velocity += [[0]*cols] 
-
+	velocity = np.zeros((N,3),dtype=float) #Initialize velocity array
+	
 	# Assign random uniform velocity
-	for ii in xrange(0,rows-1):
-		for iii in xrange(0,cols-1):
-			velocity[ii][iii] = random.uniform(0.2,5)
+	for ii in xrange(0,N):
+			velocity[ii][1] = random.uniform(-5,5) #velocity is assigned uniformly between -5 and 5, this should be changed to boltzmann distribution!
+			velocity[ii][2] = random.uniform(-5,5)
+			velocity[ii][3] = random.uniform(-5,5)
 			
-
 return;

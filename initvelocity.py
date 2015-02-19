@@ -1,11 +1,11 @@
+import numpy as np
 def initvelocity(L,D,N):
-
 	velocity = np.zeros((N,3),dtype=float) #Initialize velocity array
 	
 	# Assign random uniform velocity
-	for ii in xrange(0,N):
-			velocity[ii][0] = random.uniform(-5,5) #velocity is assigned uniformly between -5 and 5, this should be changed to boltzmann distribution!
-			velocity[ii][1] = random.uniform(-5,5)
-			velocity[ii][2] = random.uniform(-5,5)
+	for ii in xrange(0,N-1):
+			velocity[ii][0] = np.sqrt(-2*log(random.random())
+			velocity[ii][1] = np.sqrt(-2*log(random.random())
+			velocity[ii][2] = np.sqrt(-2*log(random.random())
 			
 return;

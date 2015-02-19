@@ -1,22 +1,15 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
-np.set_printoptions(threshold='nan')
+#np.set_printoptions(threshold='nan')
 
+## Assign variables
 L = 1 # box length
 M = 3 # unit cells per dimension
 N = 4*np.power(M,3) #Number of particles, 4 per unit cell
 
-##Initialization of particles
-#Homogeneous distribution
-
+## Initialization of particles, homogeneous distribution
 from initpos_function import initpos
-
 pos = initpos( L,N,M )
 
-fig = pylab.figure()
-ax = Axes3D(fig)
-
-ax.scatter(pos[:,0], pos[:,1], pos[:,2])
-plt.show()
+## Plot particles
+from scatterplot_function import scat_plot
+scat_plot(pos[:,0],pos[:,1],pos[:,2])

@@ -1,10 +1,11 @@
+## Import libraries
 import numpy as np
 #np.set_printoptions(threshold='nan')
 
 ## Assign variables
-L = 1 # box length
-M = 3 # unit cells per dimension
-N = 4*np.power(M,3) #Number of particles, 4 per unit cell
+L = 1                                   # box length
+M = 3                                   # unit cells per dimension
+N = 4*np.power(M,3)                     #Number of particles, 4 per unit cell
 
 ## Initialization of particles, homogeneous distribution
 from initpos_function import initpos

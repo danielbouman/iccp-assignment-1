@@ -11,15 +11,27 @@ def initpos(L,N,M):
 			for iiii in xrange(0,M-1): # loop through unit cells in the z-direction
 				cell_pos = a(ii,iii,iiii) #position of the lower left corner at the back of each unit cell.
 
-				pos(j,1) = a*ii+0.5*a #the first particle in each unit cell is added by adding the vector distance to the position of the unit cell
-				pos(j,2) = a*ii 	  # y position of the first particle
-				pos(j,3) = a*ii+0.5*a # z position of the first particle
+				pos(j,1) = a*ii 		#the first particle in each unit cell is added by adding the vector distance to the position of the unit cell
+				pos(j,2) = a*ii 	  	# y position of the first particle
+				pos(j,3) = a*ii 		# z position of the first particle
 				j = j + 1 # Move to next particle
 
-				pos(j,1) = a*ii # Now the same for the second particle at a different position
+				pos(j,1) = a*ii 		#Now the same for the second particle at a different position
 				pos(j,2) = a*ii+0.5*a 	# y position of the second particle
 				pos(j,3) = a*ii+0.5*a 	# z position of the second particle
 				j = j + 1 # Move to next particle
 	
+				pos(j,1) = a*ii+0.5*a 	# Now the same for the third particle at a different position
+				pos(j,2) = a*ii 		# y position of the third particle
+				pos(j,3) = a*ii+0.5*a 	# z position of the third particle
+				j = j + 1 				# Move to next particle
+	
+				pos(j,1) = a*ii+0.5*a 	# Now the same for the fourth particle at a different position
+				pos(j,2) = a*ii+0.5*a 	# y position of the fourth particle
+				pos(j,3) = a*ii 		# z position of the fourth particle
+				j = j + 1 				# Move to next particle
+	
+
+
 
 	return;

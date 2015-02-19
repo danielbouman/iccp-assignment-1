@@ -12,8 +12,8 @@ from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
 
 ## Assign variables
-L = 100                                 # Box length
-M = 1                                   # Unit cells per dimension
+L = 5                                 # Box length
+M = 2                                   # Unit cells per dimension
 N = 4*np.power(M,3)                     # Number of particles, 4 per unit cell
 h = 0.004 								# timestep
 
@@ -26,12 +26,25 @@ velocity = initvelocity( N )
 ## Init acceleration
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
+
 ## Velocity verlet
+#vel_time = np.array([])
+vel_time = np.zeros((100,1),dtype=float)
+pos_time = np.zeros((100,1),dtype=float)
+time = np.zeros((100,1),dtype=float)
 for t in xrange(0, 100):
-	pos = velocity_verlet( N, h, pos, velocity, a_0, L )
-	fig = pylab.figure()          	          # Define figure
-	ax = Axes3D(fig)                        # Define axis
-	ax.scatter(pos[:,0], pos[:,1], pos[:,2])# Plot positions#
-	pylab.xlim([0,L])
-	pylab.ylim([0,L])
-	plt.show()     
+	pos,velocity,a_0 = velocity_verlet( N, h, pos, velocity, a_0, L )
+	vel_time[t] = velocity[1,2]
+	time[t] = t
+	pos_time[t] = pos[1,2]
+
+plt.plot(time,vel_time, 'ro', time, pos_time*4, 'bo')
+plt.show()
+	#print velocity[1,2]
+	# print pos[1,2]
+	# fig = pylab.figure()          	          # Define figure
+	# ax = Axes3D(fig)                        # Define axis
+	# ax.scatter(pos[:,0], pos[:,1], pos[:,2])# Plot positions#
+	# pylab.xlim([0,L])
+	# pylab.ylim([0,L])
+	# plt.show()

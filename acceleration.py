@@ -1,15 +1,21 @@
+## Import libraries
 import numpy as np
-def acceleration(pos,m):
+## Import functions
+from distance import pair_distance 
+def acceleration(N,pos,L):
 	acceleration = np.zeros((N, 3),dtype=float)
+	m = 1
+	sigma = 10.01
 	for ii in xrange(0, N-1):
 		for iii in xrange(0, N-1):
-			x_distance = distance(pos[ii,0],pos[iii,0])
-			y_distance = distance(pos[ii,1],pos[iii,1])
-			z_distance = distance(pos[ii,2],pos[iii,2])
-			F_x = ((np.power(sigma,12))/(np.power(x_distance,13)))-((np.power(sigma,6))/(np.power(x_distance,7)))
-			F_y = ((np.power(sigma,12))/(np.power(y_distance,13)))-((np.power(sigma,6))/(np.power(y_distance,7)))
-			F_z = ((np.power(sigma,12))/(np.power(z_distance,13)))-((np.power(sigma,6))/(np.power(z_distance,7)))
-			acceleration[ii,0] = F_x/m
-			acceleration[ii,1] = F_y/m
-			acceleration[ii,2] = F_z/m
-    return #moet hier niet nog een punt komma achter¿
+			if ii != iii:
+				x_distance = pair_distance(pos[ii,0],pos[iii,0],L)
+				y_distance = pair_distance(pos[ii,1],pos[iii,1],L)
+				z_distance = pair_distance(pos[ii,2],pos[iii,2],L)
+				total_distance = np.sqrt(np.power(x_distance,2)+np.power(y_distance,2)+np.power(z_distance,2))
+				F = (12*(np.power(sigma,12))/(np.power(total_distance,13)))-6*((np.power(sigma,6))/(np.power(total_distance,7)))
+				acceleration[ii,0] = (F/m)*(x_distance/total_distance)
+				acceleration[ii,1] = (F/m)*(y_distance/total_distance)
+				acceleration[ii,2] = (F/m)*(z_distance/total_distance)
+
+	return acceleration;

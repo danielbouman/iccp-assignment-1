@@ -36,20 +36,19 @@ plt.show()                              # Display plot
 
 ## Velocity verlet
 from velocity_verlet import velocity_verlet
-pos_2 = velocity_verlet( N, h, pos, a_0, L )
-#print pos_2
-#print pos
 
-## Plot particles
-#pos_3 = np.subtract(pos_2,pos)
-#print pos_3
-# pos = np.subtract(pos_2,pos)
-fig = pylab.figure()          	          # Define figure
-ax = Axes3D(fig)                        # Define axis
-
-ax.scatter(pos_2[:,0], pos_2[:,1], pos_2[:,2])# Plot positions#
-
-pylab.xlim([0,L])
-pylab.ylim([0,L])
-plt.show()                              # Display plot
+for t in xrange(0, 100):
+	pos_2 = velocity_verlet( N, h, pos, a_0, L )
+	#print pos_2
+	#print pos
+	## Plot particles
+	#pos_3 = np.subtract(pos_2,pos)
+	#print pos_3
+	# pos = np.subtract(pos_2,pos)
+	fig = pylab.figure()          	          # Define figure
+	ax = Axes3D(fig)                        # Define axis
+	ax.scatter(pos_2[:,0], pos_2[:,1], pos_2[:,2])# Plot positions#
+	pylab.xlim([0,L])
+	pylab.ylim([0,L])
+	plt.show()                              # Display plot
 

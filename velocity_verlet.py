@@ -3,8 +3,8 @@ import numpy as np
 # Import functions
 from acceleration import acceleration
 # Define velocity verlet function
-def velocity_verlet(N, h, pos, a_0, L):
-    v_half_h = np.add(pos,0.5*a_0*h)
+def velocity_verlet(N, h, pos, v_0, a_0, L):
+    v_half_h = np.add(v_0,0.5*a_0*h)
     pos_h = np.add(pos,v_half_h*h)
     # Impose periodic boundary condition
     pos_h = np.where(pos_h<0,L+pos_h,pos_h)

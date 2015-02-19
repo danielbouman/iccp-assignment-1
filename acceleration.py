@@ -14,7 +14,7 @@ def acceleration(N,pos,L):
 				y_distance = pair_distance(pos[ii,1],pos[iii,1],L)
 				z_distance = pair_distance(pos[ii,2],pos[iii,2],L)
 				total_distance = np.sqrt(np.power(x_distance,2)+np.power(y_distance,2)+np.power(z_distance,2))
-				F = (12*(np.power(sigma,12))/(np.power(total_distance,13)))-6*((np.power(sigma,6))/(np.power(total_distance,7)))
+				#F = (12*(np.power(sigma,12))/(np.power(total_distance,13)))-6*((np.power(sigma,6))/(np.power(total_distance,7)))
 				F = 48*np.power(total_distance,-14)-24*np.power(total_distance,-8)
 				acceleration[ii,0] = (F/m)*(x_distance/total_distance)+acceleration[ii,0]
 				acceleration[ii,1] = (F/m)*(y_distance/total_distance)+acceleration[ii,1]

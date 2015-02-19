@@ -18,13 +18,13 @@ def initpos(L, N, M):
 				pos[j,0] = a*ii 		
 				pos[j,1] = a*iii+0.5*a 	 
 				pos[j,2] = a*iiii+0.5*a  
-				## Second center particle in unit cell
 				j = j + 1 				 
+				## Second center particle in unit cell
 				pos[j,0] = a*ii+0.5*a 	 
 				pos[j,1] = a*iii 		 
 				pos[j,2] = a*iiii+0.5*a  
-				## Third center particle in unit cell
 				j = j + 1 				 
+				## Third center particle in unit cell
 				pos[j,0] = a*ii+0.5*a 	 
 				pos[j,1] = a*iii+0.5*a  
 				pos[j,2] = a*iiii 		

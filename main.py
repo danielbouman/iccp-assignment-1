@@ -1,7 +1,6 @@
 ## Import libraries
 import numpy as np
 import matplotlib.pyplot as plt
-import pylab
 import time
 from mpl_toolkits.mplot3d import Axes3D
 np.set_printoptions(threshold='nan')

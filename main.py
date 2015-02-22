@@ -42,7 +42,8 @@ for t in xrange(0, 200):
 	time[t] = t
 	pos_time[t] = pos[1,2]
 	kin_energy[t] = store_quantities(N,velocity)
-
+	if np.mod(t,10) == 0:
+		velocity = normalize_momentum(N, velocity)
 
 print kin_energy
 #plt.plot(time,vel_time, 'ro', time, pos_time*4, 'bo')

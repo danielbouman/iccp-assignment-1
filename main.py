@@ -9,18 +9,21 @@ np.set_printoptions(threshold='nan')
 from initpos_function import initpos
 from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
+from normalize_momentum import normalize_momentum
 
 ## Assign variables
 L = 5                                 # Box length
 M = 2                                   # Unit cells per dimension
 N = 4*np.power(M,3)                     # Number of particles, 4 per unit cell
 h = 0.004 								# timestep
+T = 300
+m = 1
 
 ## Init particle position, homogeneous distribution
 pos = initpos( L,N,M )
 
 ## Init velocity
-velocity = initvelocity( N )
+velocity = initvelocity( N, T ,m )
 
 ## Init acceleration
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
@@ -28,10 +31,10 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Velocity verlet
 #vel_time = np.array([])
-vel_time = np.zeros((100,1),dtype=float)
-pos_time = np.zeros((100,1),dtype=float)
-time = np.zeros((100,1),dtype=float)
-for t in xrange(0, 100):
+vel_time = np.zeros((20,1),dtype=float)
+pos_time = np.zeros((20,1),dtype=float)
+time = np.zeros((20,1),dtype=float)
+for t in xrange(0, 20):
 	pos,velocity,a_0 = velocity_verlet( N, h, pos, velocity, a_0, L )
 	vel_time[t] = velocity[1,2]
 	time[t] = t

@@ -9,5 +9,7 @@ def initvelocity( N, T,m):
 		velocity[ii,1] = np.sqrt(-(kb*T)*np.log(np.random.random()))
 		velocity[ii,2] = np.sqrt(-(kb*T)*np.log(np.random.random()))
 
+		#velocity = np.zeros((N,3),dtype=float)
 		velocity = normalize_momentum(N, velocity)
+
 	return velocity;

@@ -12,10 +12,10 @@ def velocity_verlet(N, h, pos, v_0, a_0, L):
     pos_h = np.where(pos_h<0,L+pos_h,pos_h)
     pos_h = np.where(pos_h>L, pos_h-L, pos_h) 
     # print pos_h[1,2]
-    a_h = acceleration(N, pos_h, L)
+    a_h,potential = acceleration(N, pos_h, L)
     #print a_h[1,2]
     # print a_h[1,2]
-    v_h = np.add(v_half_h,0.5*a_h*h)
+    v_h = np.add(v_half_h,(0.5*a_h*h))
     # print v_h[1,2]
     a_0 = a_h
     pos = pos_h
@@ -23,4 +23,4 @@ def velocity_verlet(N, h, pos, v_0, a_0, L):
     # Impose periodic boundary condition
     pos = np.where(pos<0, L+pos, pos)
     pos = np.where(pos>L, pos-L, pos) 
-    return [pos,v_0,a_0];
+    return [pos,v_0,a_0,potential];

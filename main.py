@@ -10,6 +10,7 @@ from initpos_function import initpos
 from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
+from store_quantities import store_quantities
 
 ## Assign variables
 L = 5                                 # Box length
@@ -31,17 +32,21 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Velocity verlet
 #vel_time = np.array([])
-vel_time = np.zeros((20,1),dtype=float)
-pos_time = np.zeros((20,1),dtype=float)
-time = np.zeros((20,1),dtype=float)
-for t in xrange(0, 20):
+vel_time = np.zeros((200,1),dtype=float)
+pos_time = np.zeros((200,1),dtype=float)
+time = np.zeros((200,1),dtype=float)
+kin_energy = np.zeros((200,1))
+for t in xrange(0, 200):
 	pos,velocity,a_0 = velocity_verlet( N, h, pos, velocity, a_0, L )
 	vel_time[t] = velocity[1,2]
 	time[t] = t
 	pos_time[t] = pos[1,2]
+	kin_energy[t] = store_quantities(N,velocity)
 
-plt.plot(time,vel_time, 'ro', time, pos_time*4, 'bo')
-plt.show()
+
+print kin_energy
+#plt.plot(time,vel_time, 'ro', time, pos_time*4, 'bo')
+#plt.show()
 	#print velocity[1,2]
 	# print pos[1,2]
 	# fig = pylab.figure()          	          # Define figure

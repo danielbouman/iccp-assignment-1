@@ -7,7 +7,7 @@ def acceleration(N,pos,L):
 	m = 1
 	sigma = 1
 	epsilon = 1.65*np.power(10,-21)
-	cutoff = 1000.1
+	cutoff = 100
 	for ii in xrange(0, N-1):
 		for iii in xrange(0, N-1):
 			if ii != iii:

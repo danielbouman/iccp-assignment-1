@@ -1,6 +1,8 @@
+## Import libraries
 import numpy as np
-# Import functions
+## Define function
 def normalize_momentum(N,velocity):
+	## Normalize velocities
 	total_velocity_x = sum(velocity[:,0])
 	total_velocity_y = sum(velocity[:,1])
 	total_velocity_z = sum(velocity[:,2])

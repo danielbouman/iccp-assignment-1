@@ -39,7 +39,7 @@ pot_energy = np.zeros((100,1),dtype=float)
 
 ## Write timestamp to output file
 time = datetime.datetime.now()
-with open("output.txt", "a") as fh:
+with open("output.dat", "a") as fh:
     fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
     fh.write("Velocity 1\n")
     
@@ -63,7 +63,7 @@ for t in xrange(0, 10):
 
     ## Write to output file
     out_vel = str(velocity[1,2]) + "\n"
-    with open("output.txt", "a") as fh:
+    with open("output.dat", "a") as fh:
         fh.write(out_vel)
         
 fh.close() # Close output file

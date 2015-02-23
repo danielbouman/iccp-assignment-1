@@ -46,8 +46,11 @@ with open("output.dat", "a") as fh:
 for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     pot_energy[t] = sum(potential)
-    kin_energy[t],total_velocity[t] = store_quantities(N,velocity)
-    total_energy[t] = np.add(kin_energy,pot_energy)
+    (kin_energy[t],total_velocity[t]) = store_quantities(N,velocity)
+    if np.mod(t,200) = 0:
+    	velocity = normalize_momentum(N, velocity,T)
+    	
+    #total_energy[t] = np.add(kin_energy,pot_energy)
     ## Dynamic plotting
     # time[t] = t 
     # pos_time[t] = pos[0,1]

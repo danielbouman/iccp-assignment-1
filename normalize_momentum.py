@@ -13,6 +13,6 @@ def normalize_momentum(N,velocity,T):
 
 	rescaling_factor = np.sqrt((3*(N-1)*kb*T)/(sum(sum(np.array(velocity)**2))))
 
-	velocity = rescaling factor*velocity
+	velocity = rescaling_factor*velocity
 
 	return velocity;

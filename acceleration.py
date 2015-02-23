@@ -20,7 +20,7 @@ def acceleration(N,pos,L):
 				if abs_distance < cutoff:
 				# F = (12*(np.power(sigma,12))/(np.power(total_distance,13)))-6*((np.power(sigma,6))/(np.power(total_distance,7)))
 					V = 4*epsilon*(np.power(abs_distance,-12)-np.power(abs_distance,-6))
-					F = -epsilon*(48*np.power(abs_distance,-13)-24*np.power(abs_distance,-7))
+					F = epsilon*(48*np.power(abs_distance,-13)-24*np.power(abs_distance,-7))
 				else:
 					F = 0
 

@@ -1,8 +1,9 @@
 # Compiled bytecode
 *.pyc
 
-# Logs
+# Logs and output data
 *.log
+*.dat
 
 # OS generated files
 .DS_Store

@@ -13,11 +13,16 @@ from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities
 ## Assign variables
 L = 20                      # Box length
-M = 2                       # Unit cells per dimension
+M = 1                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
-h = 0.0004 					# Timestep
+h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
+time_dur = 1000            # In units of timesteps
+vel_time = pos_time = \
+time = kin_energy = \
+total_velocity = pot_energy = \
+total_energy = np.zeros((time_dur,1),dtype=float)
 
 ## Init particle positions
 pos = initpos( L,N,M )
@@ -27,15 +32,6 @@ velocity = initvelocity( N, T ,m )
 
 ## Init acceleration
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
-
-## Velocity verlet
-#vel_time = np.array([])
-vel_time = np.zeros((100,1),dtype=float)
-pos_time = np.zeros((100,1),dtype=float)
-time = np.zeros((100,1),dtype=float)
-kin_energy = np.zeros((100,1),dtype=float)
-total_velocity = np.zeros((100,1),dtype=float)
-pot_energy = np.zeros((100,1),dtype=float)
 
 ## Write timestamp to output file
 time = datetime.datetime.now()
@@ -47,10 +43,11 @@ with open("output.dat", "a") as fh:
 # fig = plt.figure()  # Define figure
     
 ## Time evolution
-for t in xrange(0, 10):
+for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     pot_energy[t] = sum(potential)
     kin_energy[t],total_velocity[t] = store_quantities(N,velocity)
+    total_energy[t] = np.add(kin_energy,pot_energy)
     ## Dynamic plotting
     # time[t] = t 
     # pos_time[t] = pos[0,1]
@@ -60,17 +57,21 @@ for t in xrange(0, 10):
     # ax = Axes3D(fig)                            # Define axis
     # ax.scatter(pos[:,0], pos[:,1], pos[:,2])    # Plot positions#
     ## Print
-    print velocity[1,2]
+    # print velocity[0,0]
+    # print kin_energy[t]
     # print pos[1,2]
     ## Write to output file
-    out_vel = str(velocity[1,2]) + "\n"
+    # out_vel = str(pot_energy[1,2]) + "\n"
+    # with open("output.dat", "a") as fh:
+    #     fh.write(out_vel)
+    
+    out_val = str(total_energy[t]) + "\n"
+    out_val = out_val.translate(None, '[]').replace(" ", "")
     with open("output.dat", "a") as fh:
-        fh.write(out_vel)
+        fh.write(out_val)
 fh.close() # Close output file
 
 ## Plotting
-# total_energy = np.add(kin_energy,pot_energy)
-# print kin_energy
 # plt.plot(time,pot_energy, 'r')
 # plt.show()
 # plt.plot(time,kin_energy, 'b')

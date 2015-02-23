@@ -9,7 +9,7 @@ def acceleration(N,pos,L):
 	distance = np.zeros((3),dtype=float)
 	m = 1
 #	sigma = 1
-	epsilon = 1.65*np.power(10,-21)
+#	epsilon = 1.65*np.power(10,-21)
 	epsilon = 1
 	cutoff = L*2
 	for ii in xrange(0, N-1):

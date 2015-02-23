@@ -22,7 +22,7 @@ time_dur = 1000            # In units of timesteps
 vel_time = pos_time = \
 time = kin_energy = \
 total_velocity = pot_energy = \
-total_energy = np.zeros((time_dur,1),dtype=float)
+total_energy = np.zeros((time_dur),dtype=float)
 
 ## Init particle positions
 pos = initpos( L,N,M )
@@ -47,9 +47,10 @@ for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     pot_energy[t] = sum(potential)
     (kin_energy[t],total_velocity[t]) = store_quantities(N,velocity)
-    if np.mod(t,200) = 0:
+    total_energy[t] = np.add(kin_energy[t],pot_energy[t])
+    if np.mod(t,200) == 0:
     	velocity = normalize_momentum(N, velocity,T)
-    	
+
     #total_energy[t] = np.add(kin_energy,pot_energy)
     ## Dynamic plotting
     # time[t] = t 
@@ -68,10 +69,20 @@ for t in xrange(0, time_dur):
     # with open("output.dat", "a") as fh:
     #     fh.write(out_vel)
     
-    out_val = str(total_energy[t]) + "\n"
-    out_val = out_val.translate(None, '[]').replace(" ", "")
-    with open("output.dat", "a") as fh:
-        fh.write(out_val)
+    out_energ = str(total_energy[t]) + "\n"
+    out_energ = out_energ.translate(None, '[]').replace(" ", "")
+    with open("total_energy.dat", "a") as f_energ:
+        f_energ.write(out_energ)
+        
+    out_kin = str(kin_energy[t]) + "\n"
+    out_kin = out_kin.translate(None, '[]').replace(" ", "")
+    with open("kin_energy.dat", "a") as f_kin:
+        f_kin.write(out_kin)
+        
+    out_pot = str(pot_energy[t]) + "\n"
+    out_pot = out_pot.translate(None, '[]').replace(" ", "")
+    with open("pot_energy.dat", "a") as f_pot:
+        f_pot.write(out_pot)
 fh.close() # Close output file
 
 ## Plotting

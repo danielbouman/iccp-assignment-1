@@ -19,7 +19,7 @@ h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
 display_data = 'plot'
-time_dur = 1            # In units of timesteps
+time_dur = 1000            # In units of timesteps
 vel_time = pos_time = \
 time = kin_energy = \
 total_velocity = pot_energy = \
@@ -100,4 +100,3 @@ if display_data == 'plot':
 	plt.show()
 	plt.plot(time_step,total_energy, 'g')
 	plt.show()
-	plt.plot(time_step,pot_energy,'g')

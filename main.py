@@ -17,13 +17,13 @@ from specific_heat import specific_heat
 L = 10                      # Box length
 M = 2                     	# Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
-h = 0.01 					# Timestep
-T_d = 300                   # desired temperature
+h = 0.004 					# Timestep
+T_d = 100                   # desired temperature
 r_c = L*50 					# Cut off length in terms of L
 kb = 0.0083675				# Reduced Boltzmann constant
 
 display_data = raw_input('Write to file (w) or plot (p):') or 'w'
-time_dur = raw_input('Timesteps:') or 1000         # In units of timesteps
+time_dur = raw_input('Timesteps:') or 5000         # In units of timesteps
 time_dur = int(time_dur)
 
 time_step = np.zeros((time_dur),dtype=float)
@@ -61,7 +61,7 @@ for t in xrange(0, time_dur):
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     #P[t] = virial_pressure(T,N,L,virial,r_c)
     # print total_energy[t]
-    if np.mod(t,200) == 0 and t<=1001:
+    if np.mod(t,200) == 0 and t<=1601:
     	velocity = normalize_momentum(N, velocity,T_d)
     if t>50:
 		specific_heat_1[t], specific_heat_2[t] = specific_heat(N,kb,T[t],total_energy[t-50:t],kin_energy[t-50:t])

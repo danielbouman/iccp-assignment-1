@@ -19,7 +19,7 @@ h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
 display_data = 'write'
-time_dur = 1            # In units of timesteps
+time_dur = 1000            # In units of timesteps
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
 time = np.zeros((time_dur),dtype=float)

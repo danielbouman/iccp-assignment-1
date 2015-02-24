@@ -20,7 +20,7 @@ T = 300                     # Temperature
 m = 1                       # Particle mass
 
 display_data = raw_input('Write to file (w) or plot (p):')
-time_dur = raw_input('Timesteps:') or 10         # In units of timesteps
+time_dur = int(raw_input('Timesteps:')) or 10         # In units of timesteps
 
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)

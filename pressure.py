@@ -1,13 +1,9 @@
 ## Import libraries
 import numpy as np
 ## Define function
-def virial_pressure(beta,N,r,F):
-    n = 1
+def virial_pressure(T,N,L,virial,r_c):
     pressure = np.zeros((N,3),dtype=float)
-    for ii in xrange(0,N-1):
-        pressure[ii,0] = n/beta - n/(3*N)*(-F*r[ii,0]);     # x dimension
-        pressure[ii,1] = n/beta - n/(3*N)*(-F*r[ii,1]);     # y dimension
-        pressure[ii,2] = n/beta - n/(3*N)*(-F*r[ii,2]);     # z dimension
-
-    pressure = np.add
+    kb = 1.1
+    V = np.power(L,3)
+    pressure = float((N/V)*kb*T - 1/(3*V)*virial-(2*np.pi*np.power(N,2))/(3*np.power(V,2))*(((48/11)*np.power(r_c,-11))-((24/5)*np.power(r_c,-5))))
     return pressure;

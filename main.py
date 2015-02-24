@@ -18,12 +18,18 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
-display_data = 'plot'
+
+display_data = 'write'
 time_dur = 1000            # In units of timesteps
-vel_time = pos_time = \
-time = kin_energy = \
-total_velocity = pot_energy = \
-total_energy = time_step = np.zeros((time_dur),dtype=float)
+time_step = np.zeros((time_dur),dtype=float)
+vel_time = np.zeros((time_dur),dtype=float)
+pos_time = np.zeros((time_dur),dtype=float)
+time = np.zeros((time_dur),dtype=float)
+kin_energy = np.zeros((time_dur),dtype=float)
+total_velocity = np.zeros((time_dur),dtype=float)
+pot_energy = np.zeros((time_dur),dtype=float)
+total_energy = np.zeros((time_dur),dtype=float)
+
 
 ## Init particle positions
 pos = initpos( L,N,M )
@@ -45,7 +51,7 @@ fh.close()
 with open("total_energy.dat", "w") as fh:
     fh.write("\n# "+current_time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
 fh.close()
-    
+
 ## Plotting
 # fig = plt.figure()  # Define figure
     
@@ -59,7 +65,6 @@ for t in xrange(0, time_dur):
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     if np.mod(t,200) == 0:
     	velocity = normalize_momentum(N, velocity,T)
-
     #total_energy[t] = np.add(kin_energy,pot_energy)
     ## Dynamic plotting
     # time[t] = t 
@@ -93,7 +98,6 @@ for t in xrange(0, time_dur):
 		with open("pot_energy.dat", "a") as f_pot:
 			f_pot.write(out_pot)
 		f_pot.close() # Close output file
-
 if display_data == 'plot':
 	plt.plot(time_step,pot_energy, 'r')
 	plt.show()

@@ -18,6 +18,7 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
+display_data = 'write'
 time_dur = 1            # In units of timesteps
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
@@ -77,27 +78,27 @@ for t in xrange(0, time_dur):
     # with open("output.dat", "a") as fh:
     #     fh.write(out_vel)
     
-    out_energ = str(total_energy[t]) + "\n"
-    out_energ = out_energ.translate(None, '[]').replace(" ", "")
-    with open("total_energy.dat", "a") as f_energ:
-        f_energ.write(out_energ)
-    f_energ.close()   
-    out_kin = str(kin_energy[t]) + "\n"
-    out_kin = out_kin.translate(None, '[]').replace(" ", "")
-    with open("kin_energy.dat", "a") as f_kin:
-        f_kin.write(out_kin)
-    f_kin.close()
-    out_pot = str(pot_energy[t]) + "\n"
-    out_pot = out_pot.translate(None, '[]').replace(" ", "")
-    with open("pot_energy.dat", "a") as f_pot:
-        f_pot.write(out_pot)
-    f_pot.close() # Close output file
-
-## Plotting
-# plt.plot(time,pot_energy, 'r')
-# plt.show()
-# plt.plot(time,kin_energy, 'b')
-# plt.show()
-# plt.plot(time,total_energy, 'g')
-# plt.show()
-# plt.plot(time,pot_energy,'g')
+	if display_data == 'write':
+		out_energ = str(total_energy[t]) + "\n"
+		out_energ = out_energ.translate(None, '[]').replace(" ", "")
+		with open("total_energy.dat", "a") as f_energ:
+			f_energ.write(out_energ)
+		f_energ.close()
+		out_kin = str(kin_energy[t]) + "\n"
+		out_kin = out_kin.translate(None, '[]').replace(" ", "")
+		with open("kin_energy.dat", "a") as f_kin:
+			f_kin.write(out_kin)
+		f_kin.close()
+		out_pot = str(pot_energy[t]) + "\n"
+		out_pot = out_pot.translate(None, '[]').replace(" ", "")
+		with open("pot_energy.dat", "a") as f_pot:
+			f_pot.write(out_pot)
+		f_pot.close() # Close output file
+	elif display_data == 'plot':
+		plt.plot(time,pot_energy, 'r')
+		plt.show()
+		plt.plot(time,kin_energy, 'b')
+		plt.show()
+		plt.plot(time,total_energy, 'g')
+		plt.show()
+		plt.plot(time,pot_energy,'g')

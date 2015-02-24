@@ -19,9 +19,12 @@ h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
 time_dur = 1            # In units of timesteps
-vel_time = pos_time = \
-time = kin_energy = \
-total_velocity = pot_energy = \
+vel_time = np.zeros((time_dur),dtype=float)
+pos_time = np.zeros((time_dur),dtype=float)
+time = np.zeros((time_dur),dtype=float)
+kin_energy = np.zeros((time_dur),dtype=float)
+total_velocity = np.zeros((time_dur),dtype=float)
+pot_energy = np.zeros((time_dur),dtype=float)
 total_energy = np.zeros((time_dur),dtype=float)
 
 ## Init particle positions
@@ -35,15 +38,15 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Write timestamp to output file
 time = datetime.datetime.now()
-with open("pot_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
-fh.close()
-with open("kin_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
-fh.close()
-with open("total_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
-fh.close()
+with open("pot_energy.dat", "w") as f_pot:
+    f_pot.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+f_pot.close()
+with open("kin_energy.dat", "w") as f_kin:
+    f_kin.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+f_kin.close()
+with open("total_energy.dat", "w") as f_tot:
+    f_tot.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+f_tot.close()
     
 ## Plotting
 # fig = plt.figure()  # Define figure
@@ -56,7 +59,6 @@ for t in xrange(0, time_dur):
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     if np.mod(t,200) == 0:
     	velocity = normalize_momentum(N, velocity,T)
-
     #total_energy[t] = np.add(kin_energy,pot_energy)
     ## Dynamic plotting
     # time[t] = t 

@@ -19,13 +19,9 @@ h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
 
-<<<<<<< HEAD
-display_data = 'write'
-time_dur = 10            # In units of timesteps
-=======
-display_data = 'plot'
-time_dur = 700            # In units of timesteps
->>>>>>> c69f21730b2efba5802376043287dc1f3dcc2c95
+display_data = raw_input('Write to file (w) or plot (p):')
+time_dur = raw_input('Timesteps:') or 10         # In units of timesteps
+
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
@@ -88,7 +84,7 @@ for t in xrange(0, time_dur):
     # out_vel = str(pot_energy[1,2]) + "\n"
     # with open("output.dat", "a") as fh:
     #     fh.write(out_vel)
-	if display_data == 'write':
+	if display_data == 'w':
 		out_energ = str(total_energy[t]) + "\n"
 		out_energ = out_energ.translate(None, '[]').replace(" ", "")
 		with open("total_energy.dat", "a") as f_energ:
@@ -105,7 +101,7 @@ for t in xrange(0, time_dur):
 			f_pot.write(out_pot)
 		f_pot.close() # Close output file
 		
-if display_data == 'plot':
+if display_data == 'p':
 	plt.plot(time_step,pot_energy, 'r')
 	plt.show()
 	plt.plot(time_step,kin_energy, 'b')

@@ -19,8 +19,10 @@ h = 0.01 					# Timestep
 T = 200                     # Temperature
 m = 1                       # Particle mass
 
-display_data = 'plot'
-time_dur = 7000            # In units of timesteps
+
+display_data = raw_input('Write to file (w) or plot (p):')
+time_dur = int(raw_input('Timesteps:')) or 5000         # In units of timesteps
+
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
@@ -60,7 +62,9 @@ for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     time_step[t] = t*h
     pot_energy[t] = sum(potential)
+    print velocity
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
+    print kin_energy[t]
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     if np.mod(t,200) == 0:
     	velocity = normalize_momentum(N, velocity,T)
@@ -81,7 +85,7 @@ for t in xrange(0, time_dur):
     # out_vel = str(pot_energy[1,2]) + "\n"
     # with open("output.dat", "a") as fh:
     #     fh.write(out_vel)
-	if display_data == 'write':
+	if display_data == 'w':
 		out_energ = str(total_energy[t]) + "\n"
 		out_energ = out_energ.translate(None, '[]').replace(" ", "")
 		with open("total_energy.dat", "a") as f_energ:
@@ -97,7 +101,8 @@ for t in xrange(0, time_dur):
 		with open("pot_energy.dat", "a") as f_pot:
 			f_pot.write(out_pot)
 		f_pot.close() # Close output file
-if display_data == 'plot':
+		
+if display_data == 'p':
 	plt.plot(time_step,pot_energy, 'r')
 	plt.show()
 	plt.plot(time_step,kin_energy, 'b')

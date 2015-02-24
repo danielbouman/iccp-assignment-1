@@ -58,7 +58,8 @@ fh.close()
 ## Time evolution
 for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
-    time_step[t] = t
+    time_step[t] = t*h
+    print t*h
     pot_energy[t] = sum(potential)
     print velocity
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))

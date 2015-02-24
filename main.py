@@ -18,7 +18,7 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
-time_dur = 1000            # In units of timesteps
+time_dur = 1            # In units of timesteps
 vel_time = pos_time = \
 time = kin_energy = \
 total_velocity = pot_energy = \
@@ -46,7 +46,7 @@ with open("output.dat", "w") as fh:
 for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     pot_energy[t] = sum(potential)
-    (kin_energy[t],total_velocity[t]) = store_quantities(N,velocity)
+    kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     if np.mod(t,200) == 0:
     	velocity = normalize_momentum(N, velocity,T)

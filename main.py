@@ -13,14 +13,19 @@ from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities
 ## Assign variables
 L = 20                      # Box length
-M = 1                       # Unit cells per dimension
+M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
 
+<<<<<<< HEAD
 display_data = 'write'
 time_dur = 10            # In units of timesteps
+=======
+display_data = 'plot'
+time_dur = 700            # In units of timesteps
+>>>>>>> c69f21730b2efba5802376043287dc1f3dcc2c95
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
@@ -59,7 +64,6 @@ fh.close()
 for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
     time_step[t] = t*h
-    print t*h
     pot_energy[t] = sum(potential)
     print velocity
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))

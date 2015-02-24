@@ -13,14 +13,14 @@ from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities
 ## Assign variables
 L = 20                      # Box length
-M = 2                       # Unit cells per dimension
+M = 1                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
-T = 300                     # Temperature
+T = 200                     # Temperature
 m = 1                       # Particle mass
 
 display_data = 'plot'
-time_dur = 700            # In units of timesteps
+time_dur = 7000            # In units of timesteps
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)

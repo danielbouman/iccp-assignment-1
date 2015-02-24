@@ -18,9 +18,10 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
-<<<<<<< HEAD
+
 display_data = 'write'
 time_dur = 1000            # In units of timesteps
+time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
 pos_time = np.zeros((time_dur),dtype=float)
 time = np.zeros((time_dur),dtype=float)
@@ -28,14 +29,7 @@ kin_energy = np.zeros((time_dur),dtype=float)
 total_velocity = np.zeros((time_dur),dtype=float)
 pot_energy = np.zeros((time_dur),dtype=float)
 total_energy = np.zeros((time_dur),dtype=float)
-=======
-display_data = 'plot'
-time_dur = 1            # In units of timesteps
-vel_time = pos_time = \
-time = kin_energy = \
-total_velocity = pot_energy = \
-total_energy = time_step = np.zeros((time_dur),dtype=float)
->>>>>>> ccc3f6082fce185002a57f5a498830cff4c0727b
+
 
 ## Init particle positions
 pos = initpos( L,N,M )

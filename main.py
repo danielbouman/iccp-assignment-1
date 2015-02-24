@@ -35,9 +35,15 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Write timestamp to output file
 time = datetime.datetime.now()
-with open("output.dat", "w") as fh:
+with open("pot_energy.dat", "w") as fh:
     fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
-    fh.write("Velocity 1\n")
+fh.close()
+with open("kin_energy.dat", "w") as fh:
+    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+fh.close()
+with open("total_energy.dat", "w") as fh:
+    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+fh.close()
     
 ## Plotting
 # fig = plt.figure()  # Define figure
@@ -73,17 +79,17 @@ for t in xrange(0, time_dur):
     out_energ = out_energ.translate(None, '[]').replace(" ", "")
     with open("total_energy.dat", "a") as f_energ:
         f_energ.write(out_energ)
-        
+    f_energ.close()   
     out_kin = str(kin_energy[t]) + "\n"
     out_kin = out_kin.translate(None, '[]').replace(" ", "")
     with open("kin_energy.dat", "a") as f_kin:
         f_kin.write(out_kin)
-        
+    f_kin.close()
     out_pot = str(pot_energy[t]) + "\n"
     out_pot = out_pot.translate(None, '[]').replace(" ", "")
     with open("pot_energy.dat", "a") as f_pot:
         f_pot.write(out_pot)
-fh.close() # Close output file
+    f_pot.close() # Close output file
 
 ## Plotting
 # plt.plot(time,pot_energy, 'r')

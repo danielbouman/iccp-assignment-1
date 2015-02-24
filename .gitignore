@@ -4,6 +4,10 @@
 # Logs and output data
 *.log
 *.dat
+*.png
+*.jpg
+*.bmp
+*.eps
 
 # OS generated files
 .DS_Store

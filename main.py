@@ -18,12 +18,12 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.01 					# Timestep
 T = 300                     # Temperature
 m = 1                       # Particle mass
-display_data = 'write'
+display_data = 'plot'
 time_dur = 1            # In units of timesteps
 vel_time = pos_time = \
 time = kin_energy = \
 total_velocity = pot_energy = \
-total_energy = np.zeros((time_dur),dtype=float)
+total_energy = time_step = np.zeros((time_dur),dtype=float)
 
 ## Init particle positions
 pos = initpos( L,N,M )
@@ -35,15 +35,15 @@ velocity = initvelocity( N, T ,m )
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Write timestamp to output file
-time = datetime.datetime.now()
+current_time = datetime.datetime.now()
 with open("pot_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+    fh.write("\n# "+current_time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
 fh.close()
 with open("kin_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+    fh.write("\n# "+current_time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
 fh.close()
 with open("total_energy.dat", "w") as fh:
-    fh.write("\n# "+time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
+    fh.write("\n# "+current_time.strftime('%Y/%m/%d %H:%M:%S')+":\n\n")
 fh.close()
     
 ## Plotting
@@ -52,6 +52,7 @@ fh.close()
 ## Time evolution
 for t in xrange(0, time_dur):
     pos,velocity,a_0,potential = velocity_verlet( N, h, pos, velocity, a_0, L )
+    time_step[t] = t
     pot_energy[t] = sum(potential)
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
@@ -75,7 +76,6 @@ for t in xrange(0, time_dur):
     # out_vel = str(pot_energy[1,2]) + "\n"
     # with open("output.dat", "a") as fh:
     #     fh.write(out_vel)
-    
 	if display_data == 'write':
 		out_energ = str(total_energy[t]) + "\n"
 		out_energ = out_energ.translate(None, '[]').replace(" ", "")
@@ -92,11 +92,12 @@ for t in xrange(0, time_dur):
 		with open("pot_energy.dat", "a") as f_pot:
 			f_pot.write(out_pot)
 		f_pot.close() # Close output file
-	elif display_data == 'plot':
-		plt.plot(time,pot_energy, 'r')
-		plt.show()
-		plt.plot(time,kin_energy, 'b')
-		plt.show()
-		plt.plot(time,total_energy, 'g')
-		plt.show()
-		plt.plot(time,pot_energy,'g')
+
+if display_data == 'plot':
+	plt.plot(time_step,pot_energy, 'r')
+	plt.show()
+	plt.plot(time_step,kin_energy, 'b')
+	plt.show()
+	plt.plot(time_step,total_energy, 'g')
+	plt.show()
+	plt.plot(time_step,pot_energy,'g')

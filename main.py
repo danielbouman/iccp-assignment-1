@@ -71,17 +71,17 @@ for t in xrange(0, time_dur):
     
     out_energ = str(total_energy[t]) + "\n"
     out_energ = out_energ.translate(None, '[]').replace(" ", "")
-    with open("total_energy.dat", "a") as f_energ:
+    with open("total_energy.dat", "w") as f_energ:
         f_energ.write(out_energ)
         
     out_kin = str(kin_energy[t]) + "\n"
     out_kin = out_kin.translate(None, '[]').replace(" ", "")
-    with open("kin_energy.dat", "a") as f_kin:
+    with open("kin_energy.dat", "w") as f_kin:
         f_kin.write(out_kin)
         
     out_pot = str(pot_energy[t]) + "\n"
     out_pot = out_pot.translate(None, '[]').replace(" ", "")
-    with open("pot_energy.dat", "a") as f_pot:
+    with open("pot_energy.dat", "w") as f_pot:
         f_pot.write(out_pot)
 fh.close() # Close output file
 

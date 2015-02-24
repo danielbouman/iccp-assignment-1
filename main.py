@@ -104,4 +104,3 @@ if display_data == 'plot':
 	plt.show()
 	plt.plot(time_step,total_energy, 'g')
 	plt.show()
-	plt.plot(time_step,pot_energy,'g')

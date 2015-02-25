@@ -13,6 +13,8 @@ from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities
 from pressure import virial_pressure
 from specific_heat import specific_heat
+from running_text import running_text
+
 ## Assign variables
 #L = 4.969                      # Box length
 M = 3                       # Unit cells per dimension
@@ -29,7 +31,8 @@ rho = float(rho)
 L = np.power((N/rho),(float(1)/3))
 T_d = float(T_d)
 time_dur = int(time_dur)
-print "Running Molecular Dynamics simulation..."
+
+running_text()
 
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
@@ -61,27 +64,26 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 	
 ## Time evolution
 for t in xrange(0, time_dur):
-	pos,velocity,a_0,potential,virial = velocity_verlet( N, h, pos, velocity, a_0, L, r_c )
-	time_step[t] = t
-	pot_energy[t] = 0.5*sum(potential)
-	kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
-	T[t] = (2/(3*(N-1)))*kin_energy[t]
-	total_energy[t] = np.add(kin_energy[t],pot_energy[t])
-	P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
-	# print total_energy[t]
-	if np.mod(t,40) == 0 and t<=801:
-		velocity = normalize_momentum(N, velocity,T_d)
-	if t>100:
-		specific_heat_1[t], specific_heat_2[t] = specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
-		mean_P[t] = np.mean(P[t-100:t])
-		#print "sp1"
-		#print specific_heat_1
-		#print "sp2"
-		#print specific_heat_2
-	# Print progress
-	if np.mod(t,time_dur/10) == 0:
-		print str(10-t_prog)
-		t_prog = t_prog+1
+    pos,velocity,a_0,potential,virial = velocity_verlet( N, h, pos, velocity, a_0, L, r_c )
+    time_step[t] = t
+    pot_energy[t] = 0.5*sum(potential)
+    kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
+    T[t] = (float(2)/(3*(N-1)))*float(kin_energy[t])
+    total_energy[t] = np.add(kin_energy[t],pot_energy[t])
+    P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
+    if np.mod(t,40) == 0 and t<=801:
+        velocity = normalize_momentum(N, velocity,T_d)
+    if t>100:
+        specific_heat_1[t], specific_heat_2[t] = specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
+        mean_P[t] = np.mean(P[t-100:t])
+        #print "sp1"
+        #print specific_heat_1
+        #print "sp2"
+        #print specific_heat_2
+        # Print progress
+    if np.mod(t,time_dur/10) == 0:
+        print str(10-t_prog)
+        t_prog = t_prog+1
 
 out_energ = str(total_energy) + "\n"
 out_energ = re.sub(' +',' ',out_energ)
@@ -128,6 +130,6 @@ if display_data == 'p':
 	# plt.show()
 	plt.plot(time_step,P,'k',time_step,mean_P,'b')
 	plt.show()
-	# plt.plot(time_step,pot_energy, 'b')
-	# plt.show()
+	plt.plot(time_step,pot_energy, 'b')
+	plt.show()
 	# plt.plot(time_step,total_energy, 'b')

@@ -1,9 +1,9 @@
 {
     "ace": {
-        "@guessTabSize": "true",
+        "@guessTabSize": true,
         "@newLineMode": "unix",
         "@tabSize": "4",
-        "@useSoftTabs": "true"
+        "@useSoftTabs": true
     },
     "build": {
         "@builder": "auto",
@@ -14,16 +14,16 @@
         "@searchLimit": 100
     },
     "language": {
-        "@instanceHighlight": "true",
-        "@semi": "true",
-        "@undeclaredVars": "true",
-        "@unusedFunctionArgs": "false",
+        "@instanceHighlight": true,
+        "@semi": true,
+        "@undeclaredVars": true,
+        "@unusedFunctionArgs": false,
         "@warnLevel": "info"
     },
     "run": {
         "@path": "/.c9/runners",
         "configs": {
-            "@inited": "true",
+            "@inited": true,
             "json()": {}
         }
     },

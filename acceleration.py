@@ -34,5 +34,5 @@ def acceleration(N,pos,L,cutoff):
 
 	dist_list = dist_list.flatten()										# Change the 2d array to a 1d array
 	dist_list = dist_list[dist_list !=0]								# remove zeroes from the 1d array
-	dist_hist,_ = np.histogram(dist_list,bins=100000)					# histogram of distances, with width delta r
+	dist_hist,_ = np.histogram(dist_list,bins=100)					# histogram of distances, with width delta r
 	return acceleration,potential,virial,dist_hist;

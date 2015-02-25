@@ -17,7 +17,7 @@ from running_text import running_text
 
 ## Assign variables
 #L = 4.969                      # Box length
-M = 1                       # Unit cells per dimension
+M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                   # desired temperature

@@ -1,12 +1,10 @@
-## Import libraries
-import numpy as np 							
+## Import modules
+import numpy as np		
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
-np.set_printoptions(threshold='nan')		# Do not truncate
-import time 								# timing tools
-## Import modules
-import save_data as save
-from initpos_function import initpos
+# import time 	                            
+import save_data as save                    # data export for physcial quantities
+from initpos_function import initpos        # initialize particle potitions
 from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
@@ -14,13 +12,15 @@ from store_quantities import store_quantities
 from pressure import virial_pressure
 from specific_heat import specific_heat
 from running_text import running_text
+## Global settings
+np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## Assign variables
-#L = 4.969                      # Box length
+#L = 4.969                  # Box length
 M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
-#T_d = 119.8                   # desired temperature
+#T_d = 119.8                # desired temperature
 r_c = 62.5                  # Cut off length in terms of L
 
 rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88
@@ -34,21 +34,11 @@ time_dur = int(time_dur)
 
 running_text()
 
-time_step = np.zeros((time_dur),dtype=float)
-vel_time = np.zeros((time_dur),dtype=float)
-pos_time = np.zeros((time_dur),dtype=float)
-time = np.zeros((time_dur),dtype=float)
-kin_energy = np.zeros((time_dur),dtype=float)
-total_velocity = np.zeros((time_dur),dtype=float)
-pot_energy = np.zeros((time_dur),dtype=float)
-total_energy = np.zeros((time_dur),dtype=float)
-P = np.zeros((time_dur),dtype=float)
-mean_P = np.zeros((time_dur),dtype=float)
-T = np.zeros((time_dur),dtype=float)
-specific_heat_1 = np.zeros((time_dur),dtype=float)
-specific_heat_2 = np.zeros((time_dur),dtype=float)
-diffusion_constant = np.zeros((time_dur),dtype=float)
-exp_n = np.zeros((time_dur),dtype=float)
+# assign empty array, adjust range to number of array
+time_step, vel_time, pos_time, time, kin_energy, total_velocity, pot_energy,\
+    total_energy, P, mean_P, T, specific_heat_1 , specific_heat_2,\
+    diffusion_constant, exp_n = (np.zeros((time_dur),dtype=float) for i in range(15)) 
+    
 t_prog = 0
 n_bins = 1000
 dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)
@@ -64,9 +54,6 @@ velocity = initvelocity( N, T_d)
 
 ## Init acceleration
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
-
-## Plotting
-# fig = plt.figure()  # Define figure
 
 ## Time evolution
 for t in xrange(0, time_dur):

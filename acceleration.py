@@ -2,13 +2,13 @@
 import numpy as np
 ## Import functions
 from distance import pair_distance 
-def acceleration(N,pos,L,cutoff):
+def acceleration(N,pos,L,cutoff, hist_bins):
 	## Variables
 	acceleration = np.zeros((N, 3),dtype=float)
 	potential = np.zeros((N, 1),dtype=float)
 	distance = np.zeros((3),dtype=float)
 	dist_list = np.zeros((N,N),dtype=float)
-	virial = 0 	
+	virial = 0
 #	sigma = 1
 #	epsilon = 1.65*np.power(10,-21)
 	for ii in xrange(0, N):
@@ -34,5 +34,5 @@ def acceleration(N,pos,L,cutoff):
 
 	dist_list = dist_list.flatten()										# Change the 2d array to a 1d array
 	dist_list = dist_list[dist_list !=0]								# remove zeroes from the 1d array
-	dist_hist,_ = np.histogram(dist_list,bins=100)					# histogram of distances, with width delta r
+	dist_hist,_ = np.histogram(dist_list,bins=hist_bins)				# histogram of distances, with width delta r
 	return acceleration,potential,virial,dist_hist;

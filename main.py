@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 np.set_printoptions(threshold='nan')		# Do not truncate
-import re 									# string edit tools
 import time 								# timing tools
-## Import functions
+## Import modules
+import save_data as save
 from initpos_function import initpos
 from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
@@ -94,39 +94,13 @@ for t in xrange(0, time_dur):
 
 correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))\
     /(4*np.pi*delta_r), np.power(np.multiply(hist_bins[1:],0.5),2))
-    
-    ## SAVE CORRELATION FUNCTION!!
 
-out_energ = str(total_energy) + "\n"
-out_energ = re.sub(' +',' ',out_energ)
-out_energ = out_energ.translate(None, '[]').replace(" ", "\n")
-with open("total_energy.dat", "w") as f_energ:
-	f_energ.write(out_energ)
-f_energ.close()
-out_kin = str(kin_energy) + "\n"
-out_kin = re.sub(' +',' ',out_kin)
-out_kin = out_kin.translate(None, '[]').replace(" ", "\n")
-with open("kin_energy.dat", "w") as f_kin:
-	f_kin.write(out_kin)
-f_kin.close()
-out_pot = str(pot_energy) + "\n"
-out_kin = re.sub(' +',' ',out_kin)
-out_pot = out_pot.translate(None, '[]').replace(" ", "\n")
-with open("pot_energy.dat", "w") as f_pot:
-	f_pot.write(out_pot)
-f_pot.close()
-instant_temp = str(T) + "\n"
-instant_temp = re.sub(' +',' ',instant_temp)
-instant_temp = instant_temp.translate(None, '[]').replace(" ", "\n")
-with open("instant_temp.dat", "w") as f_temp:
-	f_temp.write(instant_temp)
-f_temp.close()
-pressure = str(P) + "\n"
-pressure = re.sub(' +',' ',pressure)
-pressure = pressure.translate(None, '[]').replace(" ", "\n")
-with open("pressure.dat", "w") as f_pres:
-	f_pres.write(pressure)
-f_pres.close()
+save.save(total_energy,"total_energy")
+save.save(kin_energy,"kinetic_enery")
+save.save(pot_energy,"potential_energy")
+save.save(T,"instant_temperature")
+save.save(P,"pressure")
+save.save(correlation_function,"correlation_function")
 
 if display_data == 'p':
     # plt.show()

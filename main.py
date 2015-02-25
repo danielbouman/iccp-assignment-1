@@ -51,7 +51,7 @@ diffusion_constant = np.zeros((time_dur),dtype=float)
 exp_n = np.zeros((time_dur),dtype=float)
 t_prog = 0
 n_bins = 1000
-dist_hist = np.zeros((n_bins,time_dur),dtype=float)
+dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)
 max_pair_dis = 0.5*np.power(3,0.5)*L                        # Maximum pair distance, used for correlation length calculation
 hist_bins = np.linspace(0,max_pair_dis,num=n_bins)          # histogram bins, used for correlation length
 delta_r = max_pair_dis/n_bins
@@ -92,8 +92,10 @@ for t in xrange(0, time_dur):
         print str(10-t_prog)
         t_prog = t_prog+1
 
-correlation_length = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r), hist_bins[1:-1]) #KWADRATEREN
-print correlation_length
+correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))\
+    /(4*np.pi*delta_r), np.power(np.multiply(hist_bins[1:],0.5),2))
+    
+    ## SAVE CORRELATION FUNCTION!!
 
 out_energ = str(total_energy) + "\n"
 out_energ = re.sub(' +',' ',out_energ)

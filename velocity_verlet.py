@@ -23,5 +23,4 @@ def velocity_verlet(N, h, pos, v_0, a_0, L,cutoff, hist_bins):
     # Impose periodic boundary condition
     pos = np.where(pos<0, L+pos, pos)
     pos = np.where(pos>L, pos-L, pos) 
-    print len(dist_hist)
     return pos,v_0,a_0,potential,virial,dist_hist;

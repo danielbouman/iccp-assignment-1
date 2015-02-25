@@ -8,3 +8,4 @@ In this project, you write a molecular dynamics (MD) code which simulates an arg
 Other options are to keep the pressure constant, (NPT ensemble) or to calculate the chemical potential using Widom's particle insertion method.
 
 All calculated quantities are subject to statistical fluctuations. You should estimate the statistical error.
+t

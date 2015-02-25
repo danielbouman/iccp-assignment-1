@@ -7,6 +7,7 @@ def acceleration(N,pos,L,cutoff):
 	acceleration = np.zeros((N, 3),dtype=float)
 	potential = np.zeros((N, 1),dtype=float)
 	distance = np.zeros((3),dtype=float)
+	dist_list = np.zeros((N,N),dtype=float)
 	virial = 0 	
 #	sigma = 1
 #	epsilon = 1.65*np.power(10,-21)
@@ -17,8 +18,10 @@ def acceleration(N,pos,L,cutoff):
 				distance[1] = pair_distance(pos[ii,1],pos[iii,1],L) 	# y direction
 				distance[2] = pair_distance(pos[ii,2],pos[iii,2],L) 	# z direction
 				abs_distance = np.sqrt(np.power(distance[0],2)+np.power(distance[1],2)+np.power(distance[2],2))
+				dist_list[ii,iii] = abs_distance
+
+
 				if abs_distance < cutoff:
-				# F = (12*(np.power(sigma,12))/(np.power(total_distance,13)))-6*((np.power(sigma,6))/(np.power(total_distance,7)))
 					V = 4*(np.power(abs_distance,-12)-np.power(abs_distance,-6))
 					F = (48*np.power(abs_distance,-13)-24*np.power(abs_distance,-7))
 				else:
@@ -30,4 +33,8 @@ def acceleration(N,pos,L,cutoff):
 				acceleration[ii,2] = -F*(distance[2]/abs_distance)+acceleration[ii,2]
 				potential[ii] = V + potential[ii]
 
-	return acceleration,potential,virial;
+	dist_list = dist_list.flatten()										# Change the 2d array to a 1d array
+	dist_list = dist_list[dist_list !=0]								# remove zeroes from the 1d array
+	dist_hist = np.histogram(dist_list,100000)							# create a histogram of the distances, with width delta r
+	print len(dist_hist)
+	return acceleration,potential,virial,dist_hist;

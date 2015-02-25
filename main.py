@@ -2,7 +2,6 @@
 import numpy as np		
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
-# import time 	                            
 import save_data as save                    # data export for physcial quantities
 import initialize as init                   # initialize particles
 from velocity_verlet import velocity_verlet
@@ -56,31 +55,34 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 
 ## Time evolution
 for t in xrange(0, time_dur):
-    pos,velocity,a_0,potential,virial,dist_hist[:,t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
     time_step[t] = t
+    ## Velocity verlet
+    pos,velocity,a_0,potential,virial,dist_hist[:,t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
+    ## Potential energy
     pot_energy[t] = 0.5*sum(potential)
+    ## Kinetic energy
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
-    
+    ## Intantanious temperature
     T[t] = (float(2)/(3*(N-1)))*float(kin_energy[t])
+    ## Total energy
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
+    ## Pressure
     P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
     if np.mod(t,40) == 0 and t<=801:
         velocity = normalize_momentum(N, velocity,T_d)
+    ## Specific heat
     if t>100:
         specific_heat_1[t], specific_heat_2[t] = specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
         mean_P[t] = np.mean(P[t-100:t])
-        #print "sp1"
-        #print specific_heat_1
-        #print "sp2"
-        #print specific_heat_2
-        # Print progress
+    ## Show progress
     if np.mod(t,time_dur/10) == 0:
         print str(10-t_prog)
         t_prog = t_prog+1
-
+## Correlation function
 correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))\
     /(4*np.pi*delta_r), np.power(np.multiply(hist_bins[1:],0.5),2))
 
+## Save physical quantities
 save.save(total_energy,"total_energy")
 save.save(kin_energy,"kinetic_enery")
 save.save(pot_energy,"potential_energy")
@@ -88,6 +90,7 @@ save.save(T,"instant_temperature")
 save.save(P,"pressure")
 save.save(correlation_function,"correlation_function")
 
+## Plot data
 if display_data == 'p':
     # plt.show()
     # plt.plot(time_step,T, 'b')

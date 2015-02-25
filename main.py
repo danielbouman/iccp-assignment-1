@@ -5,8 +5,6 @@ from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 # import time 	                            
 import save_data as save                    # data export for physcial quantities
 import initialize as init                   # initialize particles
-# from initpos_function import initpos        
-# from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities

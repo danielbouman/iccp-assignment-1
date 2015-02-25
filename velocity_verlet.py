@@ -3,7 +3,7 @@ import numpy as np
 # Import functions
 from acceleration import acceleration
 # Define velocity verlet function
-def velocity_verlet(N, h, pos, v_0, a_0, L):
+def velocity_verlet(N, h, pos, v_0, a_0, L,cutoff):
     v_half_h = np.add(v_0,0.5*a_0*h)
     # print v_half_h[1,2]
     pos_h = np.add(pos,v_half_h*h)
@@ -12,7 +12,7 @@ def velocity_verlet(N, h, pos, v_0, a_0, L):
     pos_h = np.where(pos_h<0,L+pos_h,pos_h)
     pos_h = np.where(pos_h>L, pos_h-L, pos_h) 
     # print pos_h[1,2]
-    a_h,potential,virial = acceleration(N, pos_h, L)
+    a_h,potential,virial = acceleration(N, pos_h, L, cutoff)
     #print a_h[1,2]
     # print a_h[1,2]
     v_h = np.add(v_half_h,(0.5*a_h*h))

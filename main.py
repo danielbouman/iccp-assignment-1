@@ -1,10 +1,10 @@
 ## Import libraries
-import numpy as np
-import matplotlib.pyplot as plt
-import time
-from mpl_toolkits.mplot3d import Axes3D
-np.set_printoptions(threshold='nan')
-import re
+import numpy as np 							
+import matplotlib.pyplot as plt 			# plotting tools
+from mpl_toolkits.mplot3d import Axes3D		# plotting tools
+np.set_printoptions(threshold='nan')		# Do not truncate
+import re 									# string edit tools
+import time 								# timing tools
 ## Import functions
 from initpos_function import initpos
 from initvelocity import initvelocity
@@ -20,19 +20,16 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                   # desired temperature
 r_c = 62.5                  # Cut off length in terms of L
-kb = 0.0083675              # Reduced Boltzmann constant
 
-
-rho = raw_input('Insert desired density (in units of 1/sigma^3') or 0.88
-T_d = raw_input('Insert desired temperature') or 119.8         # In units of timesteps
-display_data = raw_input('Write to file (w) or plot (p):') or 'w'
-time_dur = raw_input('Timesteps:') or 2400         # In units of timesteps
+rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88
+T_d = raw_input('Insert desired temperature: ') or 1         # In units of timesteps
+display_data = raw_input('Write to file (w) or plot (p): ') or 'p'
+time_dur = raw_input('Timesteps: ') or 4000         # In units of timesteps
 rho = float(rho)
-L = np.power((N/rho),(1/3))
+L = np.power((N/rho),(float(1)/3))
 T_d = float(T_d)
 time_dur = int(time_dur)
-
-
+print "Running Molecular Dynamics simulation..."
 
 time_step = np.zeros((time_dur),dtype=float)
 vel_time = np.zeros((time_dur),dtype=float)
@@ -64,20 +61,19 @@ a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
 	
 ## Time evolution
 for t in xrange(0, time_dur):
-	pos,velocity,a_0,potential,virial = velocity_verlet( N, h, pos, velocity, a_0, L )
+	pos,velocity,a_0,potential,virial = velocity_verlet( N, h, pos, velocity, a_0, L, r_c )
 	time_step[t] = t
 	pot_energy[t] = 0.5*sum(potential)
 	kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
-	T[t] = (2/(3*kb*(N-1)))*kin_energy[t]
+	T[t] = (2/(3*(N-1)))*kin_energy[t]
 	total_energy[t] = np.add(kin_energy[t],pot_energy[t])
-	#diffusion_constant[t] = np.divide(a_0,velocity)*kb*T[t]
-	P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(kb*T[t]*rho)
+	P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
 	# print total_energy[t]
-	if np.mod(t,20) == 0 and t<=801:
+	if np.mod(t,40) == 0 and t<=801:
 		velocity = normalize_momentum(N, velocity,T_d)
-	if t>50:
-		specific_heat_1[t], specific_heat_2[t] = specific_heat(N,kb,T[t],total_energy[t-50:t],kin_energy[t-50:t])
-		mean_P[t] = np.mean(P[t-50:t])
+	if t>100:
+		specific_heat_1[t], specific_heat_2[t] = specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
+		mean_P[t] = np.mean(P[t-100:t])
 		#print "sp1"
 		#print specific_heat_1
 		#print "sp2"

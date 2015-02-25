@@ -29,4 +29,6 @@ def initpos(L, N, M):
 				pos[j,1] = a*iii+0.5*a  
 				pos[j,2] = a*iiii 		
 				j = j + 1
+
+	pos = np.add(a*0.05,pos)
 	return pos;

@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 # import time 	                            
 import save_data as save                    # data export for physcial quantities
-from initpos_function import initpos        # initialize particle potitions
-from initvelocity import initvelocity
+import initialize as init                   # initialize particles
+# from initpos_function import initpos        
+# from initvelocity import initvelocity
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
 from store_quantities import store_quantities
@@ -47,10 +48,10 @@ hist_bins = np.linspace(0,max_pair_dis,num=n_bins)          # histogram bins, us
 delta_r = max_pair_dis/n_bins
 
 ## Init particle positions
-pos = initpos( L,N,M )
+pos = init.position( L,N,M )
 
 ## Init velocity
-velocity = initvelocity( N, T_d)
+velocity = init.momentum( N, T_d)
 
 ## Init acceleration
 a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array

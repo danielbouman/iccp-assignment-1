@@ -1,12 +1,15 @@
 """
-Initialize the particle position and momentum.
+Initialize the particle position and momentum. Particle position is determined by arranging them in a homogeneous distribution.
+the distribution is done by arranging the particles in an fcc lattice. Momentum of the particles is calculated by a maxwell
+distribution. This distribution is then adjusted to set the velocity of the center of mass to zero, and rescaled to fit
+with the desired temperature.
 momentum
 N   : number of particles
 T   : desired temperature
 position
 L   : vertex length of volume V
 N   : total number of particles
-M   : number of unit cells per dimension
+M   : number of unit cells per dimension for the fcc lattice
 """
 ## Import functions
 import numpy as np

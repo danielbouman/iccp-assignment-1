@@ -1,3 +1,13 @@
+"""
+acceleration calculates the total force per particle. From this it calculates the total acceleration components of each particle.
+The virial (which is needed for the pressure), the potential energy (needed for the total energy) and amount of particles per distance
+(needed for the correlation length) is calculated in this function.
+N           : amount of particles
+pos 		: position of all the particles
+L           : length of box
+hist_bins   : The 'bins' where we divide our distances in to calculate the correlation function
+"""
+
 ## Import libraries
 import numpy as np
 ## Import functions

@@ -1,4 +1,4 @@
-Molecular dynamics simulation of an argos gas.
+Molecular dynamics simulation of an argon gas.
 
 This program simulates an argon gas. The user can specify the particle density and desired temperature. The program will return
 the diffusion constant, specific heat, temperature, pressure, correlation length, potential-, kinetic- and total energy.

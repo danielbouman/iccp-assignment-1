@@ -5,17 +5,18 @@ from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 import save_data as save                    # data export for physcial quantities
 import initialize as init                   # initialize particles
 import phys_quantities as phys              # determine physical quantities
-from velocity_verlet import velocity_verlet
-from normalize_momentum import normalize_momentum
-from running_text import running_text
+from velocity_verlet import velocity_verlet # velocity verlet, used for time evolution of the particles
+from normalize_momentum import normalize_momentum  
+import running as start                     # startup message
+
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## User input
-rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88  # Density, N/V
-T_d = raw_input('Insert desired temperature: ') or 1        # In units of timesteps
-display_data = raw_input('Plot data? Enter "p": ') or 'p'   # Option to plot data after simulation 
-time_dur = raw_input('Timesteps: ') or 400                  # Duration of the simulation in timesteps
+rho = raw_input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
+T_d = raw_input('Desired temperature (default: 1): ') or 1                           # In units of timesteps
+plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'                           # Option to plot data after simulation 
+time_dur = raw_input('Timesteps: ') or 400                                                  # Duration of the simulation in timesteps
 
 ## Assign variables
 #L = 4.969                  # Box length
@@ -30,7 +31,7 @@ T_d = float(T_d)                    # make sure desired temperature is a float
 time_dur = int(time_dur)            # make sure timesteps is an integer value
 
 ## Message at simulation start
-running_text()
+start.message()
 
 # assign empty array, adjust range to number of array
 time_step, vel_time, pos_time, time, kin_energy, total_velocity, pot_energy,\
@@ -87,7 +88,7 @@ save.save(P,"pressure")
 save.save(correlation_function,"correlation_function")
 
 ## Plot data
-if display_data == 'p':
+if plot_data.lower().strip() == 'y' or 'yes':
     # plt.show()
     # plt.plot(time_step,T, 'b')
     # plt.show()

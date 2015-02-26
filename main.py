@@ -39,7 +39,7 @@ time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
     mean_P, T, D = (np.zeros((time_dur),dtype=float) for i in range(9))
 ## Assign empty arrays to physical quantities in equilibrium phase
 if time_dur >= t_equil:
-    pot_energy, total_energy, P, specific_heat_1, specific_heat_2\
+    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, time_step_phys\
         = (np.zeros((time_dur-t_equil),dtype=float) for i in range(5))
 
 t_prog = 0                                                  # countdown timer
@@ -108,9 +108,11 @@ if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
     # plt.show()
-    plt.plot(time_step,P,'k',time_step,mean_P,'b')
-    plt.show()
-    plt.plot(time_step,pot_energy, 'b')
-    plt.show()
-    plt.plot(time_step,D, 'b')
-    plt.show()
+    ## Plot physical quantities only when system was in equilibrium
+    if time_dur >= t_equil:
+        plt.plot(time_step_phys,P,'k',time_step,mean_P,'b')
+        plt.show()
+        plt.plot(time_step_phys,pot_energy, 'b')
+        plt.show()
+        plt.plot(time_step_phys,D, 'b')
+        plt.show()

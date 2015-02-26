@@ -36,7 +36,7 @@ start.message()
 # assign empty array, adjust range to number of array
 time_step, vel_time, pos_time, time, kin_energy, total_velocity, pot_energy,\
     total_energy, P, mean_P, T, specific_heat_1 , specific_heat_2,\
-    diffusion_constant, exp_n = (np.zeros((time_dur),dtype=float) for i in range(15)) 
+    diffusion_constant, D, exp_n = (np.zeros((time_dur),dtype=float) for i in range(16)) 
     
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
@@ -54,7 +54,7 @@ a_0 = np.zeros((N,3),dtype=float)       # acceleration
 for t in xrange(0, time_dur):
     time_step[t] = t
     ## Velocity verlet
-    pos,velocity,a_0,potential,virial,dist_hist[:,t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins,D)
+    pos,velocity,a_0,potential,virial,dist_hist[:,t],D = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
     ## Potential energy
     pot_energy[t] = 0.5*sum(potential)
     ## Kinetic energy

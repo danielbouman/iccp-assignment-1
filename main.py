@@ -74,7 +74,7 @@ for t in xrange(0, time_dur):
         pot_energy[t] = (0.5*sum(potential))/N                  # Potential energy per particle. Factor 0.5 to avoid double counting
         total_energy[t] = np.add(kin_energy[t],pot_energy[t])   # Total energy
         P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)  # Pressure
-        sp_heat[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
+        sp_heat[t] = phys.specific_heat(N,T[t],kin_energy[t-50:t])     # Specific heat
         correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
         
     ## Simulation progress

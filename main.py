@@ -63,7 +63,7 @@ for t in xrange(0, time_dur):
     ## Equilibration phase
     time_step[t] = t
     ## Velocity verlet
-    pos,velocity,a_0,potential,virial,dist_hist[:,t],D = \
+    pos,velocity,a_0,potential,virial,dist_hist[:,t],D[t] = \
         velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
     ## Kinetic energy
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
@@ -116,4 +116,5 @@ if plot_data == 'y':
     plt.show()
     plt.plot(time_step,pot_energy, 'b')
     plt.show()
-    # plt.plot(time_step,total_energy, 'b')
+    plt.plot(time_step,D, 'b')
+    plt.show()

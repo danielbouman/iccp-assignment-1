@@ -29,7 +29,7 @@ rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
 T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
-t_equil = 2500              # duration of equilibration phase
+t_equil = 10              # duration of equilibration phase
 
 ## Message at simulation start
 start.message()
@@ -74,11 +74,8 @@ for t in xrange(0, time_dur):
         pot_energy[t] = 0.5*sum(potential)                  # Potential energy
         total_energy[t] = np.add(kin_energy[t],pot_energy[t])   # Total energy
         P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)  # Pressure
-        specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(\
-            N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
-        correlation_function = np.divide( ((2*np.power(L,3))\
-            /(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),\
-            np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
+        # specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
+        correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
         #mean_P[t] = np.mean(P[t-100:t])
         
     ## Simulation progress
@@ -100,10 +97,10 @@ if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,T, 'b')
     # plt.show()
-    # plt.plot(time_step,specific_heat_1, 'b')
-    # plt.show()
-    # plt.plot(time_step,specific_heat_2, 'b')
-    # plt.show()
+    plt.plot(time_step,specific_heat_1, 'b')
+    plt.show()
+    plt.plot(time_step,specific_heat_2, 'b')
+    plt.show()
     # plt.plot(time_step,diffusion_constant, 'g')
     # plt.show()
     # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')

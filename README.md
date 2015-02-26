@@ -13,11 +13,11 @@ To simulate the motion of the particles, we use the Velocity Verlet Method. This
 
 -- Equilibrium
 
-After 2500 time steps of 0.004 reduced seconds (=10microseconds), the system can safely be assumed to be in equilibrium. From that point on it is possible to extract physical quantities.
+After 2500 time steps of 0.004 reduced seconds, which in total is 10 microseconds, the system can then safely be assumed to be in equilibrium. From that point on it is possible to extract physical quantities.
 
 -- Physical quantities
 
-We extract the kinetic energy, potential energy, total energy, diffusion constant, correlation length, pressure and specific heat from the simulation. From these quantities we calculate the mean over the equilibrium phase and it's variance to give an idea of the accuracy/fluctuations in the simulation. The diffusion constant, correlation length, pressure and specific heat require some explanation for their calculation.
+We extract the kinetic energy, potential energy, total energy, diffusion constant, correlation length, pressure and specific heat from the simulation. From these quantities we calculate the mean over the equilibrium phase and it's variance to give an idea of the accuracy/fluctuations in the simulation. The diffusion constant, correlation length, pressure and specific heat merit some additional explanation for their calculation.
 
 - Diffusion constant
 The diffusion constant is defined as D = <x^2>/t in the diffusive regime. We calculate the displacement of each particle in the

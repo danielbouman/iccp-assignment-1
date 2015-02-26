@@ -78,8 +78,8 @@ for t in xrange(0, time_dur):
         correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
         
     ## Simulation progress
-    if np.mod(t,time_dur/10) == 0:
-        print str(10-t_prog)
+    if np.mod(t,time_dur/100) == 0:
+        print ('%d%%' % t_prog)
         t_prog = t_prog+1
 
 # average_quantities = np.average()
@@ -102,7 +102,7 @@ if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,specific_heat_2, 'b')
     # plt.show()
-    plt.plot(time_step,D*5.32E-8, 'g')                          # Scale factor of 5.32E-8 to revert back to standard non-reduced units
+    plt.plot(time_step,D*5.32E-8, 'g')                          # Scale factor of 5.32E-8 to revert back to standard non-reduced units, m^2/s
     plt.show()
     # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
     # plt.show()

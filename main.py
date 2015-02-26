@@ -20,24 +20,31 @@ time_dur = raw_input('Timesteps: ') or 400                                   # D
 
 ## Assign variables
 #L = 4.969                  # Box length
-M = 3                       # Unit cells per dimension
+M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                # desired temperature
 r_c = 62.5                  # Cut off length in terms of L
 rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
-T_d = float(T_d)                    # make sure desired temperature is a float
-time_dur = int(time_dur)            # make sure timesteps is an integer value
+T_d = float(T_d)            # make sure desired temperature is a float
+time_dur = int(time_dur)    # make sure timesteps is an integer value
+t_equil = 2500              # duration of equilibration phase
 
 ## Message at simulation start
 start.message()
 
-# assign empty array, adjust range to number of array
-time_step, vel_time, pos_time, time, kin_energy, total_velocity, pot_energy,\
-    total_energy, P, mean_P, T, specific_heat_1 , specific_heat_2,\
-    diffusion_constant, D, exp_n = (np.zeros((time_dur),dtype=float) for i in range(16)) 
-    
+## Assign empty arrays, adjust range to number of array
+time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
+    mean_P, T = (np.zeros((time_dur),dtype=float) for i in range(8)) 
+## Assign empty arrays to physical quantities in equilibrium phase
+if time_dur >= t_equil:
+    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, D\
+        = (np.zeros((time_dur-t_equil),dtype=float) for i in range(6))
+else:
+    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, D\
+        = (0 for i in range(6))
+
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
 dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)       # actual histogram, used for correlation function
@@ -52,44 +59,48 @@ a_0 = np.zeros((N,3),dtype=float)       # acceleration
 
 ## Time evolution
 for t in xrange(0, time_dur):
+    
+    ## Equilibration phase
     time_step[t] = t
     ## Velocity verlet
-    pos,velocity,a_0,potential,virial,dist_hist[:,t],D = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
-    ## Potential energy
-    pot_energy[t] = 0.5*sum(potential)
+    pos,velocity,a_0,potential,virial,dist_hist[:,t],D = \
+        velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
     ## Kinetic energy
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
     ## Intantanious temperature
     T[t] = (float(2)/(3*(N-1)))*float(kin_energy[t])
-    ## Total energy
-    total_energy[t] = np.add(kin_energy[t],pot_energy[t])
-    ## Pressure
-    P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
     ## Normalize momentum (with rescaling)
     if np.mod(t,40) == 0 and t<=801:
         velocity = normalize_momentum(N,velocity,T_d,kin_energy[t])
-    ## Specific heat
-    if t>100:
-        specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
-        mean_P[t] = np.mean(P[t-100:t])
-    ## Show progress
+        
+    ## Equilibrium phase
+    if t>=t_equil:
+        pot_energy[t] = 0.5*sum(potential)                  # Potential energy
+        total_energy[t] = np.add(kin_energy[t],pot_energy[t])   # Total energy
+        P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)  # Pressure
+        specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(\
+            N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
+        correlation_function = np.divide( ((2*np.power(L,3))\
+            /(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),\
+            np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
+        #mean_P[t] = np.mean(P[t-100:t])
+        
+    ## Simulation progress
     if np.mod(t,time_dur/10) == 0:
         print str(10-t_prog)
         t_prog = t_prog+1
-## Correlation function
-correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))\
-    /(4*np.pi*delta_r), np.power(np.multiply(hist_bins[1:],0.5),2))
 
 ## Save physical quantities
-save.save(total_energy,"total_energy")
 save.save(kin_energy,"kinetic_enery")
-save.save(pot_energy,"potential_energy")
 save.save(T,"instant_temperature")
+save.save(pot_energy,"potential_energy")
 save.save(P,"pressure")
-save.save(correlation_function,"correlation_function")
+save.save(total_energy,"total_energy")
+if time_dur >= t_equil: 
+    save.save(correlation_function,"correlation_function")
 
 ## Plot data
-if plot_data.lower().strip() == 'y' or 'yes':
+if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,T, 'b')
     # plt.show()
@@ -105,5 +116,4 @@ if plot_data.lower().strip() == 'y' or 'yes':
     plt.show()
     plt.plot(time_step,pot_energy, 'b')
     plt.show()
-    print exp_n
     # plt.plot(time_step,total_energy, 'b')

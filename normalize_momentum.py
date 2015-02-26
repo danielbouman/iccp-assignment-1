@@ -18,7 +18,6 @@ def normalize_momentum(N,momentum,T,E_k=-1):
     momentum[:,0] = momentum[:,0]-total_momentum[:,0]/N
     momentum[:,1] = momentum[:,1]-total_momentum[:,1]/N
     momentum[:,2] = momentum[:,2]-total_momentum[:,2]/N
-    print E_k
     ## Determine rescaling factor
     if E_k == -1:       # if no total kinetic energy is given
         rescaling_factor = np.sqrt((3*(N-1)*T)/(sum(sum(np.array(momentum)**2))))

@@ -36,8 +36,8 @@ def acceleration(N,pos,L,cutoff, hist_bins):
 					F = 0
 					V = 0
 
-				virial= abs_distance*F+virial																	# Virial is the distance between two particles times the force between them
-				acceleration[ii,0] = -F*(distance[0]/abs_distance)+acceleration[ii,0]							# Multiply the abs force with each component of the distance between two particles
+				virial= abs_distance*F*0.5+virial										# Virial is the distance between two particles times the force between them, divide by 2 to avoid double counting
+				acceleration[ii,0] = -F*(distance[0]/abs_distance)+acceleration[ii,0]	# Multiply the abs force with each component of the distance between two particles
 				acceleration[ii,1] = -F*(distance[1]/abs_distance)+acceleration[ii,1]
 				acceleration[ii,2] = -F*(distance[2]/abs_distance)+acceleration[ii,2]
 				potential[ii] = V + potential[ii]

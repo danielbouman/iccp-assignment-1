@@ -54,7 +54,7 @@ a_0 = np.zeros((N,3),dtype=float)       # acceleration
 for t in xrange(0, time_dur):
     time_step[t] = t
     ## Velocity verlet
-    pos,velocity,a_0,potential,virial,dist_hist[:,t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
+    pos,velocity,a_0,potential,virial,dist_hist[:,t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins,D)
     ## Potential energy
     pot_energy[t] = 0.5*sum(potential)
     ## Kinetic energy

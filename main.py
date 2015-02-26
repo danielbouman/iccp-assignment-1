@@ -20,7 +20,7 @@ time_dur = raw_input('Timesteps: ') or 400                                   # D
 
 ## Assign variables
 #L = 4.969                  # Box length
-M = 3                       # Unit cells per dimension
+M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                # desired temperature
@@ -105,5 +105,6 @@ if plot_data.lower().strip() == 'y' or 'yes':
     plt.show()
     plt.plot(time_step,pot_energy, 'b')
     plt.show()
-    print exp_n
+    plt.plot(time_step,D, 'b')
+    plt.show()
     # plt.plot(time_step,total_energy, 'b')

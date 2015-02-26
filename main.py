@@ -109,24 +109,9 @@ if time_dur >= t_equil:
 
 ## Plot data
 if plot_data == 'y':
-    # plt.show()
-    # plt.plot(time_step,T, 'b')
-    # plt.show()
-    # plt.plot(time_step,specific_heat_1, 'b')
-    # plt.show()
-    # plt.plot(time_step,specific_heat_2, 'b')
-    # plt.show()
     plt.plot(time_step,D*5.32E-8, 'g')                          # Scale factor of 5.32E-8 to revert back to standard non-reduced units, m^2/s
     plt.show()
-    # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
-    # plt.show()
     ## Plot physical quantities only when system was in equilibrium
     if time_dur >= t_equil:
-        # plt.plot(time_step,P,'k',time_step,mean_P,'b')
-        # plt.show()
-        # plt.plot(time_step,pot_energy, 'b')
-        # plt.show()
-        # plt.plot(time_step,D, 'b')
-        # plt.show()
         plt.plot(time_step,sp_heat, 'b')
         plt.show()

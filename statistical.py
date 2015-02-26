@@ -8,7 +8,7 @@ def save_phys(data,name,first=False):
     data_mean = np.mean(data)
     data_array = name+"\t"+str(data_mean)+"\t"+str(data_variance)
     if first:
-        header_text = "Quantity\tmean\t\t\tvariance"
+        header_text = "Quantity:\tMean:\t\t\tVariance:"
         write_mode = "w"
     else:
         header_text = ""

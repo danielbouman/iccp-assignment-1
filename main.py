@@ -36,14 +36,14 @@ start.message()
 
 ## Assign empty arrays, adjust range to number of array
 time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
-    mean_P, T = (np.zeros((time_dur),dtype=float) for i in range(8)) 
+    mean_P, T, D = (np.zeros((time_dur),dtype=float) for i in range(9))
 ## Assign empty arrays to physical quantities in equilibrium phase
 if time_dur >= t_equil:
-    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, D\
-        = (np.zeros((time_dur-t_equil),dtype=float) for i in range(6))
+    pot_energy, total_energy, P, specific_heat_1, specific_heat_2\
+        = (np.zeros((time_dur-t_equil),dtype=float) for i in range(5))
 else:
-    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, D\
-        = (0 for i in range(6))
+    pot_energy, total_energy, P, specific_heat_1, specific_heat_2\
+        = (0 for i in range(5))
 
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
@@ -63,8 +63,7 @@ for t in xrange(0, time_dur):
     ## Equilibration phase
     time_step[t] = t
     ## Velocity verlet
-    pos,velocity,a_0,potential,virial,dist_hist[:,t],D[t] = \
-        velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
+    pos,velocity,a_0,potential,virial,dist_hist[:,t],D[t] = velocity_verlet( N, h, pos, velocity, a_0, L, r_c, hist_bins)
     ## Kinetic energy
     kin_energy[t] = sum(sum(0.5*(np.power(velocity,2))))
     ## Intantanious temperature

@@ -30,7 +30,7 @@ plot_data = input('Plot data? (y/n, default: y): ') or 'y'               # Optio
 time_dur = input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
 
 ## Assign variables
-M = 2                       # Unit cells per dimension
+M = 3                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 r_c = 62.5                  # Cut off length in terms of L
@@ -38,7 +38,7 @@ rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
 T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
-t_equil = 100              # duration of equilibration phase
+t_equil = 2500              # duration of equilibration phase
 other_quantities = "Rho: "+str(rho)+", T_d: "+str(T_d)+", N: "+str(N)+", Runtime: "+str(time_dur)
 
 ## Message at simulation start

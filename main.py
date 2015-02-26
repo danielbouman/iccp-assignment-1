@@ -4,6 +4,7 @@ the diffusion constant, specific heat, temperature, pressure, correlation length
 """
 
 ## Import modules
+from __future__ import print_function       # make print function work in older versions of python
 import numpy as np		
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
@@ -20,13 +21,16 @@ import sys                                  # progress messages
 np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## User input
-rho = raw_input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
-T_d = raw_input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
-plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
-time_dur = raw_input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
+# Fix Python 2.x.
+try: input = raw_input
+except NameError: pass
+rho = input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
+T_d = input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
+plot_data = input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
+time_dur = input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
 
 ## Assign variables
-M = 3                       # Unit cells per dimension
+M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 r_c = 62.5                  # Cut off length in terms of L
@@ -34,9 +38,8 @@ rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
 T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
-t_equil = 2500              # duration of equilibration phase
+t_equil = 100              # duration of equilibration phase
 other_quantities = "Rho: "+str(rho)+", T_d: "+str(T_d)+", N: "+str(N)+", Runtime: "+str(time_dur)
-print other_quantities
 
 ## Message at simulation start
 start.message()
@@ -58,7 +61,7 @@ velocity = init.momentum( N, T_d)       # momentum
 a_0 = np.zeros((N,3),dtype=float)       # acceleration
 
 ## Time evolution
-for t in xrange(0, time_dur):
+for t in range(0, time_dur):
     
     ## Equilibration phase
     time_step[t] = t

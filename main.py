@@ -35,6 +35,8 @@ L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
 T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
 t_equil = 2500              # duration of equilibration phase
+other_quantities = "Rho: "+str(rho)+", T_d: "+str(T_d)+", N: "+str(N)+", Runtime: "+str(time_dur)
+print other_quantities
 
 ## Message at simulation start
 start.message()
@@ -95,7 +97,7 @@ save.save(sp_heat,"specific_heat",write_mode="w")
 save.save(D,"diffustion_constant",write_mode="w")
 if time_dur >= t_equil: 
     save.save(correlation_function,"correlation_function",write_mode="w")
-    stat.save_phys(T[t_equil:],"Temperature",True)
+    stat.save_phys(T[t_equil:],"Temperature",True,other_quantities)
     stat.save_phys(P[t_equil:],"Pressure")
     stat.save_phys(pot_energy[t_equil:],"Potential")
     stat.save_phys(sp_heat[t_equil:],"Specif_heat")

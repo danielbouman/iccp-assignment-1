@@ -14,6 +14,7 @@ from velocity_verlet import velocity_verlet # velocity verlet, used for time evo
 from normalize_momentum import normalize_momentum  
 import running as start                     # startup message
 import statistical as stat                  # determine statistical propertie and save to file
+import sys                                  # progress messages
 
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
@@ -79,7 +80,9 @@ for t in xrange(0, time_dur):
         
     ## Simulation progress
     if np.mod(t,time_dur/100) == 0:
-        print ('%d%%' % t_prog)
+        # print ('%d%%' % t_prog)
+        sys.stdout.write("Progress: %d%%   \r" % (t_prog) )
+        sys.stdout.flush()
         t_prog = t_prog+1
 
 ## Save physical quantities

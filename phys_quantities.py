@@ -1,5 +1,18 @@
 """
 Determine physical quantities after equilibiration phase.
+pressure calculates the pressure by a virial expansion. The third term is to correct for the cutoff length
+pressure:
+T           : current temperature
+N           : amount of particles
+L           : length of box
+virial      : sum of the virial between every particle
+r_c         : cutoff length
+
+----
+specific_heat calculates the specific heat by Lebowitz' formula.
+N           : amount of particles
+T           : current temperature
+K           : total kinetic energy over a predefined amount of timesteps
 """
 ## Import libraries
 import numpy as np

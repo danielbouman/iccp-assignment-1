@@ -1,6 +1,15 @@
 """
 The velocity_verlet implements the standard velocity verlet algorithm to integrate the equations of motion.
 The acceleration is calculated in a seperate function.
+
+N           : amount of particles
+h           : time step
+pos         : array of size 3N, which contains the position in the x,y,z direction for each particle
+v_0         : array of size 3N of the current velocities
+a_0         : array of size 3N of the current accelerations
+L           : length of the box
+cutoff      : cutoff length for interaction
+hist_bins   : The 'bins' where we divide our distances in to calculate the correlation function
 """
 # Import libraries
 import numpy as np

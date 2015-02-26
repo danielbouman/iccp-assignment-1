@@ -14,5 +14,6 @@ def pressure(T,N,L,virial,r_c):
 # Define velocity verlet function
 def specific_heat(N,T,E,K):
 	sh1 = 1/(np.power(T,2) )*np.var(E)
-	sh2 = np.power( ((2/(3*N) )-( np.var(K) )/( K[-1] )),-1 )
+    inverse_sh2 =  ((2/(3*N) )-( np.var(np.power(K,2)) )/( np.power(K[-1],2 )) #inverse of the specific heat by Lebowitz' formula
+	sh2 = np.power(inverse_sh2,-1)
 	return sh1,sh2;

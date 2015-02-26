@@ -6,12 +6,17 @@ import save_data as save                    # data export for physcial quantitie
 import initialize as init                   # initialize particles
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
-from store_quantities import store_quantities
 from pressure import virial_pressure
 from specific_heat import specific_heat
 from running_text import running_text
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
+
+## User input
+rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88
+T_d = raw_input('Insert desired temperature: ') or 1         # In units of timesteps
+display_data = raw_input('Write to file (w) or plot (p): ') or 'p'
+time_dur = raw_input('Timesteps: ') or 400         # In units of timesteps
 
 ## Assign variables
 #L = 4.969                  # Box length
@@ -20,16 +25,12 @@ N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                # desired temperature
 r_c = 62.5                  # Cut off length in terms of L
+rho = float(rho)            # make sure rho is a float
+L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
+T_d = float(T_d)                    # make sure desired temperature is a float
+time_dur = int(time_dur)            # make sure timesteps is an integer value
 
-rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88
-T_d = raw_input('Insert desired temperature: ') or 1         # In units of timesteps
-display_data = raw_input('Write to file (w) or plot (p): ') or 'p'
-time_dur = raw_input('Timesteps: ') or 400         # In units of timesteps
-rho = float(rho)
-L = np.power((N/rho),(float(1)/3))
-T_d = float(T_d)
-time_dur = int(time_dur)
-
+## Message at simulation start
 running_text()
 
 # assign empty array, adjust range to number of array
@@ -37,21 +38,17 @@ time_step, vel_time, pos_time, time, kin_energy, total_velocity, pot_energy,\
     total_energy, P, mean_P, T, specific_heat_1 , specific_heat_2,\
     diffusion_constant, exp_n = (np.zeros((time_dur),dtype=float) for i in range(15)) 
     
-t_prog = 0
-n_bins = 1000
-dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)
+t_prog = 0                                                  # countdown timer
+n_bins = 1000                                               # histogram bins, used for correlation function
+dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)       # actual histogram, used for correlation function
 max_pair_dis = 0.5*np.power(3,0.5)*L                        # Maximum pair distance, used for correlation length calculation
 hist_bins = np.linspace(0,max_pair_dis,num=n_bins)          # histogram bins, used for correlation length
 delta_r = max_pair_dis/n_bins
 
-## Init particle positions
-pos = init.position( L,N,M )
-
-## Init velocity
-velocity = init.momentum( N, T_d)
-
-## Init acceleration
-a_0 = np.zeros((N,3),dtype=float) #Initialize acceleration array
+## Initialize system
+pos = init.position( L,N,M )            # position
+velocity = init.momentum( N, T_d)       # momentum
+a_0 = np.zeros((N,3),dtype=float)       # acceleration
 
 ## Time evolution
 for t in xrange(0, time_dur):

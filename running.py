@@ -1,3 +1,8 @@
+"""
+This function returns a message to the user in the console. This message is intended to notify the user that the simulation has
+started running, and is most likely still running. This function has been optimized for speed on quadcore computers.
+"""
+
 def message():
     print " "
     print "~_____________________________________________________________________________~"

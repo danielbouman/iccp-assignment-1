@@ -4,19 +4,18 @@ import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 import save_data as save                    # data export for physcial quantities
 import initialize as init                   # initialize particles
+import phys_quantities as phys              # determine physical quantities
 from velocity_verlet import velocity_verlet
 from normalize_momentum import normalize_momentum
-from pressure import virial_pressure
-from specific_heat import specific_heat
 from running_text import running_text
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## User input
-rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88
-T_d = raw_input('Insert desired temperature: ') or 1         # In units of timesteps
-display_data = raw_input('Write to file (w) or plot (p): ') or 'p'
-time_dur = raw_input('Timesteps: ') or 400         # In units of timesteps
+rho = raw_input('Insert desired density (in units of 1/sigma^3: ') or 0.88  # Density, N/V
+T_d = raw_input('Insert desired temperature: ') or 1        # In units of timesteps
+display_data = raw_input('Plot data? Enter "p": ') or 'p'   # Option to plot data after simulation 
+time_dur = raw_input('Timesteps: ') or 400                  # Duration of the simulation in timesteps
 
 ## Assign variables
 #L = 4.969                  # Box length
@@ -64,12 +63,12 @@ for t in xrange(0, time_dur):
     ## Total energy
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     ## Pressure
-    P[t] = (virial_pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
+    P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
     if np.mod(t,40) == 0 and t<=801:
         velocity = normalize_momentum(N, velocity,T_d)
     ## Specific heat
     if t>100:
-        specific_heat_1[t], specific_heat_2[t] = specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
+        specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])
         mean_P[t] = np.mean(P[t-100:t])
     ## Show progress
     if np.mod(t,time_dur/10) == 0:

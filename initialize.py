@@ -1,7 +1,17 @@
-## Import libraries
-import numpy as np
+"""
+Initialize the particle position and momentum.
+momentum
+N   : number of particles
+T   : desired temperature
+position
+L   : vertex length of volume V
+N   : total number of particles
+M   : number of unit cells per dimension
+"""
 ## Import functions
+import numpy as np
 from normalize_momentum import normalize_momentum
+
 ## Initial momentum function
 def momentum( N, T):
 	init_momentum = np.zeros((N,3),dtype=float) 	# Initialize velocity array

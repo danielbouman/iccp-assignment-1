@@ -3,20 +3,19 @@ import numpy as np
 ## Import functions
 from distance import pair_distance 
 def acceleration(N,pos,L,cutoff, hist_bins):
-	## Variables
+	## Reset variables
 	acceleration = np.zeros((N, 3),dtype=float)
 	potential = np.zeros((N, 1),dtype=float)
 	distance = np.zeros((3),dtype=float)
 	dist_list = np.zeros((N,N),dtype=float)
 	virial = 0
-#	sigma = 1
-#	epsilon = 1.65*np.power(10,-21)
-	for ii in xrange(0, N):
-		for iii in xrange(0, N):
-			if ii != iii:
-				distance[0] = pair_distance(pos[ii,0],pos[iii,0],L) 	# x direction
-				distance[1] = pair_distance(pos[ii,1],pos[iii,1],L) 	# y direction
-				distance[2] = pair_distance(pos[ii,2],pos[iii,2],L) 	# z direction
+
+	for ii in xrange(0, N):								# Loop over each particle
+		for iii in xrange(0, N):						# Loop over all other particles
+			if ii != iii:								# Exclude same particles
+				distance[0] = pair_distance(pos[ii,0],pos[iii,0],L) 	# x distance
+				distance[1] = pair_distance(pos[ii,1],pos[iii,1],L) 	# y distance
+				distance[2] = pair_distance(pos[ii,2],pos[iii,2],L) 	# z distance
 				abs_distance = np.sqrt(np.power(distance[0],2)+np.power(distance[1],2)+np.power(distance[2],2))
 				dist_list[ii,iii] = abs_distance
 

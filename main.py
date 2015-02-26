@@ -13,6 +13,7 @@ import phys_quantities as phys              # determine physical quantities
 from velocity_verlet import velocity_verlet # velocity verlet, used for time evolution of the particles
 from normalize_momentum import normalize_momentum  
 import running as start                     # startup message
+import statistical as stat                  # determine statistical propertie and save to file
 
 ## Global settings
 np.set_printoptions(threshold='nan')		# Do not truncate print
@@ -82,8 +83,6 @@ for t in xrange(0, time_dur):
         print str(10-t_prog)
         t_prog = t_prog+1
 
-# average_quantities = np.average()
-
 ## Save physical quantities
 save.save(kin_energy,"kinetic_enery",write_mode="w")
 save.save(T,"instant_temperature",write_mode="w")
@@ -92,6 +91,9 @@ save.save(P,"pressure",write_mode="w")
 save.save(total_energy,"total_energy",write_mode="w")
 if time_dur >= t_equil: 
     save.save(correlation_function,"correlation_function",write_mode="w")
+    stat.save_phys(T,"Temperature",True)
+    stat.save_phys(P,"Pressure")
+    stat.save_phys(pot_energy,"Potential")
 
 ## Plot data
 if plot_data == 'y':

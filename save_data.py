@@ -12,8 +12,7 @@ def save(data_array,name,header="",write_mode="a"):
     write_data = re.sub(' +',' ',write_data)                            # remove exess spaces
     write_data = write_data.translate(None, '[]').replace(" ", "\n")    # remove brackets and add line breaks
     with open(name+".dat", write_mode) as file:                         # write to file
-        if write_mode == "w":
-            file.write(header)
+        file.write(header+"\n")
     	file.write(write_data)
     file.close()
     return

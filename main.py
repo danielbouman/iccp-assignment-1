@@ -84,13 +84,13 @@ for t in xrange(0, time_dur):
         t_prog = t_prog+1
 
 ## Save physical quantities
-save.save(kin_energy,"kinetic_enery")
-save.save(T,"instant_temperature")
-save.save(pot_energy,"potential_energy")
-save.save(P,"pressure")
-save.save(total_energy,"total_energy")
+save.save(kin_energy,"kinetic_enery",write_mode="w")
+save.save(T,"instant_temperature",write_mode="w")
+save.save(pot_energy,"potential_energy",write_mode="w")
+save.save(P,"pressure",write_mode="w")
+save.save(total_energy,"total_energy",write_mode="w")
 if time_dur >= t_equil: 
-    save.save(correlation_function,"correlation_function")
+    save.save(correlation_function,"correlation_function",write_mode="w")
 
 ## Plot data
 if plot_data == 'y':

@@ -25,7 +25,7 @@ plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'               # O
 time_dur = raw_input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
 
 ## Assign variables
-M = 2                       # Unit cells per dimension
+M = 3                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 r_c = 62.5                  # Cut off length in terms of L
@@ -33,7 +33,7 @@ rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
 T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
-t_equil = 200              # duration of equilibration phase
+t_equil = 2500              # duration of equilibration phase
 
 ## Message at simulation start
 start.message()
@@ -42,7 +42,6 @@ start.message()
 time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
     mean_P, T, D, pot_energy, total_energy, P, sp_heat, \
     time_step_phys = (np.zeros((time_dur),dtype=float) for i in range(14))
-
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
 dist_hist = np.zeros((n_bins-1,time_dur),dtype=float)       # actual histogram, used for correlation function
@@ -89,11 +88,16 @@ save.save(T,"instant_temperature",write_mode="w")
 save.save(pot_energy,"potential_energy",write_mode="w")
 save.save(P,"pressure",write_mode="w")
 save.save(total_energy,"total_energy",write_mode="w")
+save.save(sp_heat,"specific_heat",write_mode="w")
+save.save(D,"diffustion_constant",write_mode="w")
 if time_dur >= t_equil: 
     save.save(correlation_function,"correlation_function",write_mode="w")
-    stat.save_phys(T,"Temperature",True)
-    stat.save_phys(P,"Pressure")
-    stat.save_phys(pot_energy,"Potential")
+    stat.save_phys(T[t_equil:],"Temperature",True)
+    stat.save_phys(P[t_equil:],"Pressure")
+    stat.save_phys(pot_energy[t_equil:],"Potential")
+    stat.save_phys(sp_heat[t_equil:],"Specif_heat")
+    stat.save_phys(total_energy[t_equil:],"Tot_energy")
+    stat.save_phys(D[t_equil:],"diffusion")
 
 ## Plot data
 if plot_data == 'y':

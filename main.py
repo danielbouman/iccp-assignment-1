@@ -1,3 +1,8 @@
+"""
+This program simulates an argon gas. The user can specify the particle density and desired temperature. The program will return
+the diffusion constant, specific heat, temperature, pressure, correlation length, potential-, kinetic- and total energy.
+"""
+
 ## Import modules
 import numpy as np		
 import matplotlib.pyplot as plt 			# plotting tools
@@ -16,14 +21,12 @@ np.set_printoptions(threshold='nan')		# Do not truncate print
 rho = raw_input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
 T_d = raw_input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
 plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
-time_dur = raw_input('Timesteps: ') or 1600                                   # Duration of the simulation in timesteps
+time_dur = raw_input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
 
 ## Assign variables
-#L = 4.969                  # Box length
 M = 2                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
-#T_d = 119.8                # desired temperature
 r_c = 62.5                  # Cut off length in terms of L
 rho = float(rho)            # make sure rho is a float
 L = np.power((N/rho),(float(1)/3))  # get vertex length L of the volume
@@ -83,6 +86,8 @@ for t in xrange(0, time_dur):
         print str(10-t_prog)
         t_prog = t_prog+1
 
+average_quantities = np.average()
+
 ## Save physical quantities
 save.save(kin_energy,"kinetic_enery")
 save.save(T,"instant_temperature")
@@ -101,7 +106,7 @@ if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,specific_heat_2, 'b')
     # plt.show()
-    plt.plot(time_step,D*5.32E-8, 'g')
+    plt.plot(time_step,D*5.32E-8, 'g')                          # Scale factor of 5.32E-8 to revert back to standard non-reduced units
     plt.show()
     # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
     # plt.show()

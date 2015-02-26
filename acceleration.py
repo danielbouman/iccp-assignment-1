@@ -32,7 +32,7 @@ def acceleration(N,pos,L,cutoff, hist_bins):
 				acceleration[ii,2] = -F*(distance[2]/abs_distance)+acceleration[ii,2]
 				potential[ii] = V + potential[ii]
 
-	dist_list = dist_list.flatten()										# Change the 2d array to a 1d array
-	dist_list = dist_list[dist_list !=0]								# remove zeroes from the 1d array
-	dist_hist,_ = 0.5*np.histogram(dist_list,bins=hist_bins)			# histogram of distances, with width delta r. Factor 0.5 for doublecounting
+	dist_list = dist_list.flatten()							# Change the 2d array to a 1d array
+	dist_list = dist_list[dist_list !=0]					# remove zeroes from the 1d array
+	dist_hist,_ = np.histogram(dist_list,bins=hist_bins)	# histogram of distances, with width delta r.
 	return acceleration,potential,virial,dist_hist;

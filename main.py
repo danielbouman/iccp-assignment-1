@@ -39,11 +39,8 @@ start.message()
 
 ## Assign empty arrays to variables used in entire simulation, adjust range to number of array
 time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
-    mean_P, T, D, pot_energy, total_energy, P, specific_heat_1, \
-    specific_heat_2, time_step_phys = (np.zeros((time_dur),dtype=float) for i in range(15))
-## Assign empty arrays to physical quantities in equilibrium phase
-# if time_dur > t_equil:
-#         = (np.zeros((time_dur-t_equil),dtype=float) for i in range(6))
+    mean_P, T, D, pot_energy, total_energy, P, sp_heat, \
+    time_step_phys = (np.zeros((time_dur),dtype=float) for i in range(14))
 
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
@@ -77,16 +74,15 @@ for t in xrange(0, time_dur):
         pot_energy[t] = (0.5*sum(potential))/N                  # Potential energy per particle. Factor 0.5 to avoid double counting
         total_energy[t] = np.add(kin_energy[t],pot_energy[t])   # Total energy
         P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)  # Pressure
-        specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
+        sp_heat[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])     # Specific heat
         correlation_function = np.divide( ((2*np.power(L,3))/(N*(N-1)))*(np.mean(dist_hist,axis=1))/(4*np.pi*delta_r),np.power(np.multiply(hist_bins[1:],0.5),2))   # correlation function
-        #mean_P[t] = np.mean(P[t-100:t])
         
     ## Simulation progress
     if np.mod(t,time_dur/10) == 0:
         print str(10-t_prog)
         t_prog = t_prog+1
 
-average_quantities = np.average()
+# average_quantities = np.average()
 
 ## Save physical quantities
 save.save(kin_energy,"kinetic_enery",write_mode="w")
@@ -118,5 +114,5 @@ if plot_data == 'y':
         # plt.show()
         # plt.plot(time_step,D, 'b')
         # plt.show()
-        plt.plot(time_step,specific_heat_2, 'b')
+        plt.plot(time_step,sp_heat, 'b')
         plt.show()

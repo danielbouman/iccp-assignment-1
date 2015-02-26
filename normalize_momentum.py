@@ -1,17 +1,29 @@
+"""
+Normalize and rescale particle momentum.
+normalize_momentum(N,momentum,T,E_k=-1)
+N           : number of particles
+momentum    : particle momentum
+T           : desired temperature
+E_k         : total kinetic
+"""
 ## Import libraries
 import numpy as np
 ## Define function
-def normalize_momentum(N,velocity,T):
-    total_velocity = np.zeros(velocity.shape,dtype=float)
+def normalize_momentum(N,momentum,T,E_k=-1):
+    total_momentum = np.zeros(momentum.shape,dtype=float)
     ## Normalize velocities
-    total_velocity[:,0] = sum(velocity[:,0])
-    total_velocity[:,1] = sum(velocity[:,1])
-    total_velocity[:,2] = sum(velocity[:,2])
-    velocity[:,0] = velocity[:,0]-total_velocity[:,0]/N
-    velocity[:,1] = velocity[:,1]-total_velocity[:,1]/N
-    velocity[:,2] = velocity[:,2]-total_velocity[:,2]/N
+    total_momentum[:,0] = sum(momentum[:,0])
+    total_momentum[:,1] = sum(momentum[:,1])
+    total_momentum[:,2] = sum(momentum[:,2])
+    momentum[:,0] = momentum[:,0]-total_momentum[:,0]/N
+    momentum[:,1] = momentum[:,1]-total_momentum[:,1]/N
+    momentum[:,2] = momentum[:,2]-total_momentum[:,2]/N
+    print E_k
+    ## Determine rescaling factor
+    if E_k == -1:       # if no total kinetic energy is given
+        rescaling_factor = np.sqrt((3*(N-1)*T)/(sum(sum(np.array(momentum)**2))))
+    else:               # if total kinetic energy is already determined
+        rescaling_factor = np.sqrt((3*(N-1)*T)/(2*E_k))
+    momentum = rescaling_factor*momentum
 
-    rescaling_factor = np.sqrt((3*(N-1)*T)/(sum(sum(np.array(velocity)**2))))
-    velocity = rescaling_factor*velocity
-
-    return velocity;
+    return momentum;

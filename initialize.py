@@ -13,14 +13,14 @@ import numpy as np
 from normalize_momentum import normalize_momentum
 
 ## Initial momentum function
-def momentum( N, T):
-	init_momentum = np.zeros((N,3),dtype=float) 	# Initialize velocity array
+def momentum(N,T):
+	init_momentum = np.zeros((N,3),dtype=float)
 	## Assign velocity from uniform random number
 	for ii in xrange(0,N):
 		init_momentum[ii,0] = np.sqrt(-2*np.log(np.random.random()))
 		init_momentum[ii,1] = np.sqrt(-2*np.log(np.random.random()))
 		init_momentum[ii,2] = np.sqrt(-2*np.log(np.random.random()))
-	init_momentum = normalize_momentum(N, init_momentum,T)
+	init_momentum = normalize_momentum(N,init_momentum,T)
 	return init_momentum;
 	
 ## Initial position position

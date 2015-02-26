@@ -14,13 +14,13 @@ np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## User input
 rho = raw_input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
-T_d = raw_input('Desired temperature (default: 1): ') or 1                           # In units of timesteps
-plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'                           # Option to plot data after simulation 
-time_dur = raw_input('Timesteps: ') or 400                                                  # Duration of the simulation in timesteps
+T_d = raw_input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
+plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
+time_dur = raw_input('Timesteps: ') or 400                                   # Duration of the simulation in timesteps
 
 ## Assign variables
 #L = 4.969                  # Box length
-M = 2                       # Unit cells per dimension
+M = 3                       # Unit cells per dimension
 N = 4*np.power(M,3)         # Number of particles, 4 per unit cell
 h = 0.004                   # Timestep
 #T_d = 119.8                # desired temperature
@@ -65,8 +65,9 @@ for t in xrange(0, time_dur):
     total_energy[t] = np.add(kin_energy[t],pot_energy[t])
     ## Pressure
     P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)
+    ## Normalize momentum (with rescaling)
     if np.mod(t,40) == 0 and t<=801:
-        velocity = normalize_momentum(N, velocity,T_d)
+        velocity = normalize_momentum(N,velocity,T_d,kin_energy[t])
     ## Specific heat
     if t>100:
         specific_heat_1[t], specific_heat_2[t] = phys.specific_heat(N,T[t],total_energy[t-50:t],kin_energy[t-50:t])

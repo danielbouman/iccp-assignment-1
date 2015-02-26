@@ -36,11 +36,11 @@ start.message()
 
 ## Assign empty arrays to variables used in entire simulation, adjust range to number of array
 time_step, vel_time, pos_time, time, kin_energy, total_velocity,\
-    mean_P, T, D = (np.zeros((time_dur),dtype=float) for i in range(9))
+    mean_P, T, D, pot_energy, total_energy, P, specific_heat_1, \
+    specific_heat_2, time_step_phys = (np.zeros((time_dur),dtype=float) for i in range(15))
 ## Assign empty arrays to physical quantities in equilibrium phase
-if time_dur >= t_equil:
-    pot_energy, total_energy, P, specific_heat_1, specific_heat_2, time_step_phys\
-        = (np.zeros((time_dur-t_equil),dtype=float) for i in range(5))
+# if time_dur > t_equil:
+#         = (np.zeros((time_dur-t_equil),dtype=float) for i in range(6))
 
 t_prog = 0                                                  # countdown timer
 n_bins = 1000                                               # histogram bins, used for correlation function
@@ -70,7 +70,7 @@ for t in xrange(0, time_dur):
         velocity = normalize_momentum(N,velocity,T_d,kin_energy[t])
         
     ## Equilibrium phase
-    if t>=t_equil:
+    if t>t_equil:
         pot_energy[t] = 0.5*sum(potential)                  # Potential energy
         total_energy[t] = np.add(kin_energy[t],pot_energy[t])   # Total energy
         P[t] = (phys.pressure(T[t],N,L,virial,r_c))/(T[t]*rho)  # Pressure
@@ -97,19 +97,19 @@ if plot_data == 'y':
     # plt.show()
     # plt.plot(time_step,T, 'b')
     # plt.show()
-    plt.plot(time_step,specific_heat_1, 'b')
-    plt.show()
-    plt.plot(time_step,specific_heat_2, 'b')
-    plt.show()
+    # plt.plot(time_step,specific_heat_1, 'b')
+    # plt.show()
+    # plt.plot(time_step,specific_heat_2, 'b')
+    # plt.show()
     # plt.plot(time_step,diffusion_constant, 'g')
     # plt.show()
     # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
     # plt.show()
     ## Plot physical quantities only when system was in equilibrium
     if time_dur >= t_equil:
-        plt.plot(time_step_phys,P,'k',time_step,mean_P,'b')
+        plt.plot(time_step,P,'k',time_step,mean_P,'b')
         plt.show()
-        plt.plot(time_step_phys,pot_energy, 'b')
+        plt.plot(time_step,pot_energy, 'b')
         plt.show()
-        plt.plot(time_step_phys,D, 'b')
+        plt.plot(time_step,D, 'b')
         plt.show()

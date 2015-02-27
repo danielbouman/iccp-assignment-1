@@ -4,6 +4,7 @@ the diffusion constant, specific heat, temperature, pressure, correlation length
 """
 
 ## Import modules
+from __future__ import print_function       # make print function work in older versions of python
 import numpy as np		
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
@@ -20,10 +21,13 @@ import sys                                  # progress messages
 np.set_printoptions(threshold='nan')		# Do not truncate print
 
 ## User input
-rho = raw_input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
-T_d = raw_input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
-plot_data = raw_input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
-time_dur = raw_input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
+# Fix Python 2.x.
+try: input = raw_input
+except NameError: pass
+rho = input('Density (in units of 1/sigma^3, default: 0.88): ') or 0.88  # Density, N/V
+T_d = input('Desired temperature (default: 1): ') or 1                   # In units of timesteps
+plot_data = input('Plot data? (y/n, default: y): ') or 'y'               # Option to plot data after simulation 
+time_dur = input('Timesteps: ') or 1600                                  # Duration of the simulation in timesteps
 
 ## Assign variables
 M = 3                       # Unit cells per dimension
@@ -36,7 +40,6 @@ T_d = float(T_d)            # make sure desired temperature is a float
 time_dur = int(time_dur)    # make sure timesteps is an integer value
 t_equil = 2500              # duration of equilibration phase
 other_quantities = "Rho: "+str(rho)+", T_d: "+str(T_d)+", N: "+str(N)+", Runtime: "+str(time_dur)
-print other_quantities
 
 ## Message at simulation start
 start.message()
@@ -58,7 +61,7 @@ velocity = init.momentum( N, T_d)       # momentum
 a_0 = np.zeros((N,3),dtype=float)       # acceleration
 
 ## Time evolution
-for t in xrange(0, time_dur):
+for t in range(0, time_dur):
     
     ## Equilibration phase
     time_step[t] = t
@@ -106,24 +109,9 @@ if time_dur >= t_equil:
 
 ## Plot data
 if plot_data == 'y':
-    # plt.show()
-    # plt.plot(time_step,T, 'b')
-    # plt.show()
-    # plt.plot(time_step,specific_heat_1, 'b')
-    # plt.show()
-    # plt.plot(time_step,specific_heat_2, 'b')
-    # plt.show()
     plt.plot(time_step,D*5.32E-8, 'g')                          # Scale factor of 5.32E-8 to revert back to standard non-reduced units, m^2/s
     plt.show()
-    # plt.plot(time_step,kin_energy, 'r', time_step,pot_energy, 'b',time_step,total_energy,'g')
-    # plt.show()
     ## Plot physical quantities only when system was in equilibrium
     if time_dur >= t_equil:
-        # plt.plot(time_step,P,'k',time_step,mean_P,'b')
-        # plt.show()
-        # plt.plot(time_step,pot_energy, 'b')
-        # plt.show()
-        # plt.plot(time_step,D, 'b')
-        # plt.show()
         plt.plot(time_step,sp_heat, 'b')
         plt.show()

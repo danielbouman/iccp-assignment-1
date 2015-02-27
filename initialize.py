@@ -19,7 +19,7 @@ from normalize_momentum import normalize_momentum
 def momentum(N,T):
 	init_momentum = np.zeros((N,3),dtype=float)
 	## Assign velocity from uniform random number
-	for ii in xrange(0,N):
+	for ii in range(0,N):
 		init_momentum[ii,0] = np.sqrt(-2*np.log(np.random.random()))
 		init_momentum[ii,1] = np.sqrt(-2*np.log(np.random.random()))
 		init_momentum[ii,2] = np.sqrt(-2*np.log(np.random.random()))
@@ -32,9 +32,9 @@ def position(L, N, M):
     pos = np.zeros((N, 3),dtype=float)  # Init position array
     a = float(L)/M                      # Lattice constant
     j = 0                               # Set counter over all particles
-    for ii in xrange(0, M):             # Unit cells, x-direction
-        for iii in xrange(0, M):        # Unit cells, y-direction
-            for iiii in xrange(0, M):   # Unit cells, z-direction
+    for ii in range(0, M):             # Unit cells, x-direction
+        for iii in range(0, M):        # Unit cells, y-direction
+            for iiii in range(0, M):   # Unit cells, z-direction
                 ## Corner particle in unit cell
                 pos[j,0] = a*ii         # x-position
                 pos[j,1] = a*iii        # y-position

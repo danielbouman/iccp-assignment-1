@@ -20,8 +20,8 @@ def acceleration(N,pos,L,cutoff, hist_bins):
 	dist_list = np.zeros((N,N),dtype=float)
 	virial = 0
 
-	for ii in xrange(0, N):								# Loop over each particle
-		for iii in xrange(0, N):						# Loop over all other particles
+	for ii in range(0, N):								# Loop over each particle
+		for iii in range(0, N):						# Loop over all other particles
 			if ii != iii:								# Exclude same particles
 				distance[0] = pair_distance(pos[ii,0],pos[iii,0],L) 	# x distance
 				distance[1] = pair_distance(pos[ii,1],pos[iii,1],L) 	# y distance

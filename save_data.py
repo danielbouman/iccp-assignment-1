@@ -7,12 +7,14 @@ write_mode  : specify write modus e.g. w = overwrite, a = append (default: a)
 """
 ## Import libraries
 import re   # string editing tools
+import six
 def save(data_array,name,header="",write_mode="a"):
-    write_data = str(data_array) + "\n"                                 # convert data to string
-    write_data = re.sub(' +',' ',write_data)                            # remove exess spaces
-    write_data = write_data.translate(None, '[]').replace(" ", "\n")    # remove brackets and add line breaks
+    if isinstance(data_array, six.string_types):
+        write_data = data_array+"\n"
+    else:
+        write_data = "\n".join(str(x) for x in data_array)
     with open(name+".dat", write_mode) as file:                         # write to file
         file.write(header)
-    	file.write(write_data)
+        file.write(write_data)
     file.close()
     return

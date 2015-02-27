@@ -4,8 +4,8 @@ the diffusion constant, specific heat, temperature, pressure, correlation length
 """
 
 ## Import modules
-from __future__ import print_function       # make print function work in older versions of python
-import numpy as np		
+from __future__ import print_function       # make print function work in python 2.x
+import numpy as np		                    # import numpy
 import matplotlib.pyplot as plt 			# plotting tools
 from mpl_toolkits.mplot3d import Axes3D		# plotting tools
 import save_data as save                    # data export for physcial quantities

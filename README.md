@@ -36,7 +36,7 @@ The pressure is calculated by a virial expansion. The total virial is calculated
 The specific heat is calculated every time step by a formula derived by Lebowitz et al (Ensemble Dependence of Fluctuations with Application to Machine Computation)
 
 
-
+79516afb5a1591675055e1483c85383b90aa6f51
 
 
 

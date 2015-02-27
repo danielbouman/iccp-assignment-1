@@ -30,7 +30,7 @@ def acceleration(N,pos,L,cutoff, hist_bins):
 				dist_list[ii,iii] = abs_distance																# Save distance for correlation length calc
 
 				if abs_distance < cutoff:																		# Set forces to zero if the distance is greater than the cutoff
-					V = 4*(np.power(abs_distance,-12)-np.power(abs_distance,-6))
+					V = 4*(np.power(abs_distance,-12)-np.power(abs_distance,-6))			# Calculate lennard jones potential
 					F = (48*np.power(abs_distance,-13)-24*np.power(abs_distance,-7))
 				else:
 					F = 0

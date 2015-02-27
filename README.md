@@ -3,6 +3,12 @@ Molecular dynamics simulation of an argos gas.
 This program simulates an argon gas. The user can specify the particle density and desired temperature. The program will return
 the diffusion constant, specific heat, temperature, pressure, correlation length, potential-, kinetic- and total energy.
 
+-- Important notes for the user
+
+Equilibrium of the system is achieved around 2500 time steps. Therefore only input time steps larger than 5000!
+
+-- General outline of the program -- 
+
 -- Initialization
 
 The program starts by initializing the positions and momenta of all the particles. The positions are initialized by arranging all the particles in an fcc lattice in a box of size L. The momenta are initialized by generating random numbers with a Maxwell distribution. The momenta are adjusted so that the center of mass velocity is zero. All the velocities are then scaled as to satisfy the equipartition for our desired temperature. We impose periodic boundary conditions in the box, to 'enlarge' the system and to ease calculations on reflecting on the surfaces of the box.
@@ -20,4 +26,22 @@ After 2500 time steps of 0.004 reduced seconds, which in total is 10 microsecond
 We extract the kinetic energy, potential energy, total energy, diffusion constant, correlation length, pressure and specific heat from the simulation. From these quantities we calculate the mean over the equilibrium phase and it's variance to give an idea of the accuracy/fluctuations in the simulation. The diffusion constant, correlation length, pressure and specific heat merit some additional explanation for their calculation.
 
 - Diffusion constant
-The diffusion constant is defined as D = <x^2>/t in the diffusive regime. We calculate the displacement of each particle in the
+The diffusion constant D is defined as <x^2> = Dt in the diffusive regime. We calculate the displacement of each particle in the x,y,z direction, taking into account periodic boundary conditions. Dividing the displacement by the time step allows us to find the instanteneous diffusion constant
+
+- Correlation length
+At the beginning of the simulation, an array is initialized with linear spacing from 0 to (sqrt(3)/2)*L (the maximum distance allowed before periodic boundary conditions kick in) with 1000 elements. During each time step, an array is created with all the absolute distances in it. A histogram is created by splitting the second list into the 'bins' of the first list. This histogram is saved every timestep. After the end of the simulation, we can calculate the average amount of particles over the time per bin. Using the formula given, this allows us to find the correlation length.
+
+- Pressure
+The pressure is calculated by a virial expansion. The total virial is calculated every time step. An additional correction is used when a cutoff is implemented
+
+- Specific heat
+
+The specific heat is calculated every time step by a formula derived by Lebowitz et al (Ensemble Dependence of Fluctuations with Application to Machine Computation)
+
+
+
+
+
+
+
+

@@ -29,7 +29,7 @@ def velocity_verlet(N, h, pos, v_0, a_0, L,cutoff, hist_bins):
     v_h = np.add(v_half_h,(0.5*a_h*h))
 
     # Calculate diffusion constant from the displacement
-    D = diffusion_constant(pos_h,pos,h,L)
+    D = diffusion_constant(v_half_h,h,L)
 
     # Update acceleration, position and velocity to new values
     a_0 = a_h

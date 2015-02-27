@@ -1,13 +1,14 @@
 Molecular dynamics simulation of an argon gas.
 
--- Execution
+-- Execution:
+
 To run, compile main.py. Tested with python versions 2.7.6 and 3.4. 
 
 -- User input and output
 This program simulates an argon gas. The user can specify the particle density and desired temperature. The program will return the diffusion constant, specific heat, temperature, pressure, correlation length, potential-, kinetic- and total energy as a function of timesteps, in corresponding .dat files. The average and variance values of temperature, pressure, potential energy, specif heat, total energy and diffusion constant are saved to phys_quantities.dat.
 
 -- Important notes for the user
-Equilibrium of the system is achieved around 2500 time steps. Therefore only for times larger than 2500, will phy_quantities.dat be generated. For reliable quantities, a minimum of 5000 time steps is recommended.
+Equilibrium of the system is achieved around 2500 time steps. Therefore only for times larger than 2500, will phys_quantities.dat be generated. For reliable quantities, a minimum of 5000 time steps is recommended.
 
 -- General outline of the program -- 
 
